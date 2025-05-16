@@ -24,7 +24,7 @@ export function createRoom(
   for (let i = y; i < y + height; i++) {
     for (let j = x; j < x + width; j++) {
       if (map[i][j] !== 'empty') {
-        return 
+        continue 
       }
     }
   }

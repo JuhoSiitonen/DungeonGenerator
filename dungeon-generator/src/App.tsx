@@ -20,7 +20,7 @@ function App() {
     <form onSubmit={createRooms}>
       <label>
         Huoneiden määrä:
-        <input type="number" value={roomCount} onChange={(e) => setRoomCount(Number(e.target.value))} />
+        <input type="number" value={roomCount} onChange={(e) => setRoomCount(Number(e.target.value))} max={20}/>
       </label>
       <button type="submit">Luo</button>
     </form>    
