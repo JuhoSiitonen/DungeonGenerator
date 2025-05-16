@@ -8,7 +8,7 @@ function App() {
   const [map, setMap] = useState(createEmptyMap(60, 40))
   
   const createSingleRoom = () => {
-    createRoom(map, 10, 10)
+    createRoom(map)
     setMap([...map])
   }
 

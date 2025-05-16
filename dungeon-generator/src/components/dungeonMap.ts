@@ -10,9 +10,11 @@ export function createEmptyMap(width: number, height: number): DungeonMapMatrix 
 
 export function createRoom(
   map: DungeonMapMatrix,
-  width: number,
-  height: number
+
 ): void {
+  // Sattumanvaraiset leveys ja korkeus huoneelles
+  const width = Math.floor(Math.random() * (map[0].length /4))
+  const height = Math.floor(Math.random() * (map.length /4))
   // Sattumanvaraiset x ja y koordinaatit huoneelle
   const x = Math.floor(Math.random() * (map[0].length - width))
   const y = Math.floor(Math.random() * (map.length - height))
