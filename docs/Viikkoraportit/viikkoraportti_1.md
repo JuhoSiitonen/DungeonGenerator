@@ -1,5 +1,6 @@
 # Viikkoraportti 1 (12-18.5.2025)
 
+Käytetyt tunnit: 10h
 
 1. Mitä olen tehnyt tällä viikolla?
 - Aiheen valinta, siihen tutustuminen videoiden ja muiden lähteiden kautta.

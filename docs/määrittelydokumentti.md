@@ -25,9 +25,9 @@ Projektissa käytetään **TypeScriptiä**. Visualisointi toteutetaan web-selaim
 
 ## 3. Ratkaistava ongelma
 
-Ohjelma ratkaisee **dynaamisen, monivaiheisen luolaston generoinnin ongelman**:
+Ohjelma ratkaisee **luolaston generoinnin ongelman**:
 
-> Kuinka voidaan luoda satunnainen, yhtenäinen, pelaajan liikkumisen mahdollistava luolasto, joka on rakenteeltaan looginen?
+Kuinka luoda satunnainen, yhtenäinen, pelaajan liikkumisen mahdollistava luolasto, joka on rakenteeltaan looginen?
 
 ---
 
@@ -50,8 +50,8 @@ Syötteet ohjaavat luolaston generoinnin eri vaiheita ja vaikuttavat luolaston k
 |----------|-----------|---------------|----------------|
 | Huoneiden generointi | Satunnainen + tarkistus | O(n²) (pahimmillaan) | O(n) |
 | Delaunay-triangulaatio | Bowyer–Watson | O(n log n) | O(n) |
-| MST (Kruskal/Prim) | O(E log E) | O(E) |
-| Käytävien rakentaminen | A* tai suora yhdistäminen | O(k) | O(k) |
+| MST (Kruskal/Prim) | O(n log n) | O(n) |
+| Käytävien rakentaminen | A* tai suora yhdistäminen | O(n) | O(n) |
 
 ---
 
