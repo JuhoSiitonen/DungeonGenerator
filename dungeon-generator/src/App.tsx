@@ -4,11 +4,12 @@ import { createEmptyMap, createRoom } from "./components/dungeonMap"
 
 
 function App() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [map, setMap] = useState(createEmptyMap(60, 40))
+  const [roomCount, setRoomCount] = useState(0)
   
-  const createSingleRoom = () => {
-    createRoom(map)
+  const createRooms = (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    createRoom(map, roomCount)
     setMap([...map])
   }
 
@@ -16,7 +17,13 @@ function App() {
     <div>
     <h1>2D Luolaston visualisointi</h1>
     <DungeonMap dungeon={map} tileSize={12} />
-    <button onClick={createSingleRoom}>Luo huone</button>
+    <form onSubmit={createRooms}>
+      <label>
+        Huoneiden määrä:
+        <input type="number" value={roomCount} onChange={(e) => setRoomCount(Number(e.target.value))} />
+      </label>
+      <button type="submit">Luo</button>
+    </form>    
   </div>
   )
 }
