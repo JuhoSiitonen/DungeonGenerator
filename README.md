@@ -1,6 +1,6 @@
 # DungeonGenerator
 
-Tiralabra kurssin repositorio
+Tiralabra kurssin repositorio.
 
 - [Määrittelydokumentti](https://github.com/JuhoSiitonen/DungeonGenerator/blob/main/docs/m%C3%A4%C3%A4rittelydokumentti.md)
 - [Viikkoraportit](https://github.com/JuhoSiitonen/DungeonGenerator/blob/main/docs/Viikkoraportit/viikkoraportti_1.md)
