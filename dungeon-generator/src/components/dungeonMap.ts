@@ -21,13 +21,17 @@ export function createRoom(
   const x = Math.floor(Math.random() * (map[0].length - width))
   const y = Math.floor(Math.random() * (map.length - height))
   // Tarkistetaan että huone on tyhjä
+  let isEmpty = true
   for (let i = y; i < y + height; i++) {
     for (let j = x; j < x + width; j++) {
       if (map[i][j] !== 'empty') {
-        continue 
+        isEmpty = false
+        break
       }
     }
+    if (!isEmpty) break
   }
+  if (!isEmpty) continue
   // Täytetään huone 'room' laatoilla
   for (let i = y; i < y + height; i++) {
     for (let j = x; j < x + width; j++) {
