@@ -8,7 +8,7 @@ export function createEmptyMap(width: number, height: number): DungeonMapMatrix 
   )
 }
 
-export function createRoom(
+export function createRooms(
   map: DungeonMapMatrix,
   numberOfRooms: number,
 ): void {

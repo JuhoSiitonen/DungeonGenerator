@@ -1,15 +1,24 @@
 import { useState } from "react"
 import { DungeonMap }  from "./components/DungeonMap.tsx"
-import { createEmptyMap, createRoom } from "./components/dungeonMap"
+import { createEmptyMap, createRooms } from "./components/dungeonMap"
 
+export interface RoomSpecifics {
+  width: number,
+  height: number,
+  xCenter: number,
+  yCenter: number
+}
 
 function App() {
   const [map, setMap] = useState(createEmptyMap(60, 40))
   const [roomCount, setRoomCount] = useState(0)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [roomSpecifics, setRoomSpecifics] = useState<RoomSpecifics[]>([])
   
-  const createRooms = (e: React.SyntheticEvent) => {
+  const generateRooms = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    createRoom(map, roomCount)
+    setMap(createEmptyMap(60, 40))
+    setRoomSpecifics(createRooms(map, roomCount))
     setMap([...map])
   }
 
@@ -17,7 +26,7 @@ function App() {
     <div>
     <h1>2D Luolaston visualisointi</h1>
     <DungeonMap dungeon={map} tileSize={12} />
-    <form onSubmit={createRooms}>
+    <form onSubmit={generateRooms}>
       <label>
         Huoneiden määrä:
         <input type="number" value={roomCount} onChange={(e) => setRoomCount(Number(e.target.value))} max={20}/>
