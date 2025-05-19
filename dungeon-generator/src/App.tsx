@@ -18,7 +18,7 @@ function App() {
   const generateRooms = (e: React.SyntheticEvent) => {
     e.preventDefault()
     setMap(createEmptyMap(60, 40))
-    setRoomSpecifics(createRooms(map, roomCount))
+    setRoomSpecifics(createRooms(map, roomCount, "seed"))
     setMap([...map])
   }
 
