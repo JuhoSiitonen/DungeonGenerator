@@ -50,7 +50,7 @@ Syötteet ohjaavat luolaston generoinnin eri vaiheita ja vaikuttavat luolaston k
 |----------|-----------|---------------|----------------|
 | Huoneiden generointi | Satunnainen + tarkistus | O(n²) (pahimmillaan) | O(n) |
 | Delaunay-triangulaatio | Bowyer–Watson | O(n log n) | O(n) |
-| MST (Kruskal/Prim) | O(n log n) | O(n) |
+| Minimum Spanning Tree | (Kruskal/Prim) | O(n log n) | O(n) |
 | Käytävien rakentaminen | A* tai suora yhdistäminen | O(n) | O(n) |
 
 ---
@@ -71,7 +71,13 @@ Syötteet ohjaavat luolaston generoinnin eri vaiheita ja vaikuttavat luolaston k
 
 ---
 
-## 7. Muut ohjelmointikielet mitä hallitsen
+## 7. Homman ydin
+
+Työn ydin on toteuttaa Bowyer-Watson algoritmi ja muut tarvittavat algoritmit järkevästi ja tehokkaasti. Ensin on tarkoitus tehdä jokin toimiva versio tarvittavista algoritmeista ja välivaiheiden  visualisointi. Lopuksi tulisi olla ohjelma joka toteuttaa mainitut algoritmit ja käyttäjä voi seurata visualisoinnista mitä tapahtuu ja mielellään myös "kulkea" luodussa luolastossa, jota toivon mukaan voisi generoida dynaamisesti lisää. 
+
+---
+
+## 8. Muut ohjelmointikielet mitä hallitsen
 - Python
 - Javascript
 - C# 
