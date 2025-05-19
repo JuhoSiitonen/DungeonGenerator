@@ -1,3 +1,6 @@
+import type { RoomSpecifics } from "../App"
+import seedrandom from 'seedrandom'
+
 export type Tile = 'empty' | 'room' | 'corridor'
 
 export type DungeonMapMatrix = Tile[][]
@@ -11,32 +14,54 @@ export function createEmptyMap(width: number, height: number): DungeonMapMatrix 
 export function createRooms(
   map: DungeonMapMatrix,
   numberOfRooms: number,
-): void {
+  seed: string
+): RoomSpecifics[] {
+  // Käytetään seedrandomia satunnaisten huoneiden luomiseen, jotta saadaan toistettavat tulokset
+  const rng = seedrandom(seed)
   let roomCount = 0
-  while ( roomCount < numberOfRooms ) {
-  // Sattumanvaraiset leveys ja korkeus huoneelle
-  const width = Math.floor(Math.random() * (map[0].length /4))
-  const height = Math.floor(Math.random() * (map.length /4))
-  // Sattumanvaraiset x ja y koordinaatit huoneelle
-  const x = Math.floor(Math.random() * (map[0].length - width))
-  const y = Math.floor(Math.random() * (map.length - height))
-  // Tarkistetaan että huone on tyhjä
-  let isEmpty = true
-  for (let i = y; i < y + height; i++) {
-    for (let j = x; j < x + width; j++) {
-      if (map[i][j] !== 'empty') {
-        isEmpty = false
-        break
+  const roomSpecifics: RoomSpecifics[] = []
+
+  let attempts = 0
+  const maxAttempts = numberOfRooms * 10
+
+   while (roomCount < numberOfRooms && attempts < maxAttempts) {
+    attempts++
+
+    // Sattumanvaraiset leveys ja korkeus huoneelle, ja sattumanvaraiset x ja y koordinaatit
+    const width = Math.floor(rng() * (map[0].length / 4))
+    const height = Math.floor(rng() * (map.length / 4))
+    const x = Math.floor(rng() * (map[0].length - width))
+    const y = Math.floor(rng() * (map.length - height))
+
+    // Tarkistetaan että huone on tyhjä
+    let isEmpty = true
+    for (let i = y; i < y + height; i++) {
+      for (let j = x; j < x + width; j++) {
+        if (map[i][j] !== 'empty') {
+          isEmpty = false
+          break
+        }
+      }
+      if (!isEmpty) break
+    }
+    if (!isEmpty) continue
+
+    // Täytetään huone 'room' laatoilla
+    for (let i = y; i < y + height; i++) {
+      for (let j = x; j < x + width; j++) {
+        map[i][j] = 'room'
       }
     }
-    if (!isEmpty) break
+
+    roomSpecifics.push({
+      width,
+      height,
+      xCenter: x + Math.floor(width / 2),
+      yCenter: y + Math.floor(height / 2),
+    })
+
+    roomCount++
   }
-  if (!isEmpty) continue
-  // Täytetään huone 'room' laatoilla
-  for (let i = y; i < y + height; i++) {
-    for (let j = x; j < x + width; j++) {
-      map[i][j] = 'room'
-    }
-  }
-  roomCount++
-}}
+
+  return roomSpecifics
+}
