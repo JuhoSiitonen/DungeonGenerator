@@ -27,13 +27,41 @@ function BowyerWatson (pointList)
     return triangulation
 */
 
+import type { RoomSpecifics } from "../../App";
+
+export interface Point {
+    x: number
+    y: number
+}
+
 export interface Triangle {
     coordinates: { x: number; y: number }[]
     circumcircle: { x: number; y: number; radius: number }
 }
 
-import type { RoomSpecifics } from "../../App";
+export interface CircumCircle {
+    center: Point
+    radius: number
+}
+
+export const circumCircleCalculator = (a: Point, b: Point, c: Point): CircumCircle  => {
+    // Lasketaan kolmion pisteet sisältävän ympyrän keskipiste ja säde
+    // Käytetään kaavaa: https://en.wikipedia.org/wiki/Circumcircle   -> Osio Circumcenter coordinates - Cartesian coordinates
+
+    const d = 2 * (a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y))
+    const x = ((a.x ** 2 + a.y ** 2) * (b.y - c.y) + (b.x ** 2 + b.y ** 2) * (c.y - a.y) + (c.x ** 2 + c.y ** 2) * (a.y - b.y)) / d
+    const y = ((a.x ** 2 + a.y ** 2) * (c.x - b.x) + (b.x ** 2 + b.y ** 2) * (a.x - c.x) + (c.x ** 2 + c.y ** 2) * (b.x - a.x)) / d
+
+    return {
+        center: { x, y },
+        radius: Math.sqrt((x - a.x) ** 2 + (y - a.y) ** 2)
+    }
+}
 
 export const delaunayTriangulation = (roomSpecifics: RoomSpecifics[]) => {
     const triangulation : Triangle[] = []
+    const points: Point[] = roomSpecifics.map((room) => ({
+        x: room.xCenter,
+        y: room.yCenter,
+    }))
 }
