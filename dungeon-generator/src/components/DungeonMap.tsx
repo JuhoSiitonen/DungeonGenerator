@@ -1,13 +1,15 @@
 import { useEffect, useRef } from 'react'
 import type { DungeonMapMatrix } from './dungeonMap'
-import React from 'react'
+import type { RoomSpecifics } from '../App'
+import { circumCircleCalculator } from './algorithms/delaunayTriangulation'
 
 type Props = {
   dungeon: DungeonMapMatrix
   tileSize?: number
+  roomSpecifics?: RoomSpecifics[]
 }
 
-export const DungeonMap = ({ dungeon, tileSize = 10 }: Props): JSX.Element => {
+export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics }: Props): JSX.Element => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -35,7 +37,37 @@ export const DungeonMap = ({ dungeon, tileSize = 10 }: Props): JSX.Element => {
         ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize)
       })
     })
-  }, [dungeon, tileSize])
+
+    console.log(roomSpecifics)
+    
+    if (roomSpecifics && roomSpecifics.length >= 3) {
+    for (let i = 0; i < roomSpecifics.length - 2; i += 3) {
+      const p1 = roomSpecifics[i]
+      const p2 = roomSpecifics[i + 1]
+      const p3 = roomSpecifics[i + 2]
+
+      const canvasHeight = dungeon.length
+      const circle = circumCircleCalculator(
+        { x: p1.xCenter, y: canvasHeight - p1.yCenter },
+        { x: p2.xCenter, y: canvasHeight - p2.yCenter },
+        { x: p3.xCenter, y: canvasHeight - p3.yCenter }
+      )
+      console.log('Drawing circle at:', circle.center.x, circle.center.y, 'radius:', circle.radius)
+
+      ctx.beginPath()
+      ctx.strokeStyle = 'red'
+      ctx.lineWidth = 1
+      ctx.arc(
+        circle.center.x,
+        circle.center.y ,
+        circle.radius,
+        0,
+        2 * Math.PI
+      )
+      ctx.stroke()
+    }
+  }
+    }, [dungeon, tileSize, roomSpecifics])
 
   return (
     <canvas

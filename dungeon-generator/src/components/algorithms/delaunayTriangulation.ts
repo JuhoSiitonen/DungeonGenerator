@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 /*
 Pseudokoodi Bowyer-Watson algoritmille jolla toteutetaan Delaunay triangulaatio (lähde wikipedia)
@@ -58,6 +59,13 @@ export const circumCircleCalculator = (a: Point, b: Point, c: Point): CircumCirc
         center: { x, y },
         radius: Math.sqrt((x - a.x) ** 2 + (y - a.y) ** 2)
     }
+}
+
+export const pointWithinCircle = (p: Point, circle: CircumCircle): boolean => {
+  const dx = p.x - circle.center.x
+  const dy = p.y - circle.center.y
+  const distSq = dx * dx + dy * dy
+  return distSq < circle.radius * circle.radius
 }
 
 export const delaunayTriangulation = (roomSpecifics: RoomSpecifics[]) => {

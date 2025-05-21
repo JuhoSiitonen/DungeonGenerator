@@ -17,15 +17,17 @@ function App() {
   
   const generateRooms = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    setMap(createEmptyMap(60, 40))
-    setRoomSpecifics(createRooms(map, roomCount, "seed"))
-    setMap([...map])
+    const emptyMap = createEmptyMap(60, 40)
+    const specifics = createRooms(emptyMap, roomCount, "1234")
+    setRoomSpecifics(specifics)
+    setMap(emptyMap)
   }
+
 
   return (
     <div>
     <h1>2D Luolaston visualisointi</h1>
-    <DungeonMap dungeon={map} tileSize={12} />
+    <DungeonMap dungeon={map} tileSize={12} roomSpecifics={roomSpecifics}/>
     <form onSubmit={generateRooms}>
       <label>
         Huoneiden määrä:
