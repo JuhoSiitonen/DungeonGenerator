@@ -11,6 +11,9 @@ type Props = {
 
 export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics }: Props): JSX.Element => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  if (!dungeon || dungeon.length === 0) {
+    return <div>Ei luolastoa</div>
+  }
 
   useEffect(() => {
     const canvas = canvasRef.current

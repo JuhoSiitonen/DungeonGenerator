@@ -51,13 +51,13 @@ export const circumCircleCalculator = (a: Point, b: Point, c: Point): CircumCirc
 
     // TODO: tarkista että pisteet eivät ole suorassa linjassa
 
-    const d = 2 * (a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y))
-    const x = ((a.x ** 2 + a.y ** 2) * (b.y - c.y) + (b.x ** 2 + b.y ** 2) * (c.y - a.y) + (c.x ** 2 + c.y ** 2) * (a.y - b.y)) / d
-    const y = ((a.x ** 2 + a.y ** 2) * (c.x - b.x) + (b.x ** 2 + b.y ** 2) * (a.x - c.x) + (c.x ** 2 + c.y ** 2) * (b.x - a.x)) / d
+    const d = 2 * (a.x * ( c.y - b.y) + b.x * (a.y - c.y) + c.x * (b.y - a.y))
+    const x = ((a.x ** 2 + a.y ** 2) * (c.y - b.y) + (b.x ** 2 + b.y ** 2) * (a.y - c.y) + (c.x ** 2 + c.y ** 2) * (b.y - a.y)) / d
+    const y = ((a.x ** 2 + a.y ** 2) * (b.x - c.x) + (b.x ** 2 + b.y ** 2) * (c.x - a.x) + (c.x ** 2 + c.y ** 2) * (a.x - b.x)) / d
 
     return {
         center: { x, y },
-        radius: Math.sqrt((x - a.x) ** 2 + (y - a.y) ** 2)
+        radius: Math.sqrt((a.x - x) ** 2 + (a.y - y) ** 2)
     }
 }
 

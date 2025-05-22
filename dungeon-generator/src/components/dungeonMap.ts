@@ -11,15 +11,15 @@ export function createEmptyMap(width: number, height: number): DungeonMapMatrix 
   )
 }
 
-export function createRooms(
-  map: DungeonMapMatrix,
+export function createMapAndRooms(
   numberOfRooms: number,
   seed: string
-): RoomSpecifics[] {
+): {roomSpecifics:RoomSpecifics[], map:DungeonMapMatrix} {
   // Käytetään seedrandomia satunnaisten huoneiden luomiseen, jotta saadaan toistettavat tulokset
   const rng = seedrandom(seed)
   let roomCount = 0
   const roomSpecifics: RoomSpecifics[] = []
+  const map = createEmptyMap(60, 40)
 
   let attempts = 0
   const maxAttempts = numberOfRooms * 10
@@ -63,5 +63,5 @@ export function createRooms(
     roomCount++
   }
 
-  return roomSpecifics
+  return {roomSpecifics, map}
 }
