@@ -11,10 +11,7 @@ type Props = {
 
 export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics }: Props): JSX.Element => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  if (!dungeon || dungeon.length === 0) {
-    return <div>Ei luolastoa</div>
-  }
-
+  
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -44,16 +41,17 @@ export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics }: Props): JS
     console.log(roomSpecifics)
     
     if (roomSpecifics && roomSpecifics.length >= 3) {
-    for (let i = 0; i < roomSpecifics.length - 2; i += 3) {
+    for (let i = 0; i < roomSpecifics.length - 2; i++) {
       const p1 = roomSpecifics[i]
       const p2 = roomSpecifics[i + 1]
       const p3 = roomSpecifics[i + 2]
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const canvasHeight = dungeon.length
       const circle = circumCircleCalculator(
-        { x: p1.xCenter, y: canvasHeight - p1.yCenter },
-        { x: p2.xCenter, y: canvasHeight - p2.yCenter },
-        { x: p3.xCenter, y: canvasHeight - p3.yCenter }
+        { x: p1.xCenter, y:  p1.yCenter },
+        { x: p2.xCenter, y:  p2.yCenter },
+        { x: p3.xCenter, y:  p3.yCenter }
       )
       console.log('Drawing circle at:', circle.center.x, circle.center.y, 'radius:', circle.radius)
 

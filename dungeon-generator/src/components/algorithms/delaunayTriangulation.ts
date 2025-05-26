@@ -36,9 +36,9 @@ export interface Point {
 }
 
 export interface Triangle {
-    coordinates: { x: number; y: number }[]
-    circumcircle: { x: number; y: number; radius: number }
-}
+    coordinates: Point[]
+    circumcircle: CircumCircle
+} 
 
 export interface CircumCircle {
     center: Point

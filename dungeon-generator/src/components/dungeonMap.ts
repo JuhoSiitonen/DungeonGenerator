@@ -28,8 +28,9 @@ export function createMapAndRooms(
     attempts++
 
     // Sattumanvaraiset leveys ja korkeus huoneelle, ja sattumanvaraiset x ja y koordinaatit
-    const width = Math.floor(rng() * (map[0].length / 4))
-    const height = Math.floor(rng() * (map.length / 4))
+    const minRoomSize = 2
+    const width = Math.floor(rng() * (map[0].length / 4)) + minRoomSize
+    const height = Math.floor(rng() * (map.length / 4)) + minRoomSize
     const x = Math.floor(rng() * (map[0].length - width))
     const y = Math.floor(rng() * (map.length - height))
 
