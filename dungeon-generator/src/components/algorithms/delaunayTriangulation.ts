@@ -28,45 +28,10 @@ function BowyerWatson (pointList)
     return triangulation
 */
 
+import type { Triangle } from "three";
 import type { RoomSpecifics } from "../../App";
+import type { Point, CircumCircle } from "./types";
 
-export interface Point {
-    x: number
-    y: number
-}
-
-export interface Triangle {
-    coordinates: Point[]
-    circumcircle: CircumCircle
-} 
-
-export interface CircumCircle {
-    center: Point
-    radius: number
-}
-
-export const circumCircleCalculator = (a: Point, b: Point, c: Point): CircumCircle  => {
-    // Lasketaan kolmion pisteet sisältävän ympyrän keskipiste ja säde
-    // Käytetään kaavaa: https://en.wikipedia.org/wiki/Circumcircle   -> Osio Circumcenter coordinates - Cartesian coordinates
-
-    // TODO: tarkista että pisteet eivät ole suorassa linjassa
-
-    const d = 2 * (a.x * ( c.y - b.y) + b.x * (a.y - c.y) + c.x * (b.y - a.y))
-    const x = ((a.x ** 2 + a.y ** 2) * (c.y - b.y) + (b.x ** 2 + b.y ** 2) * (a.y - c.y) + (c.x ** 2 + c.y ** 2) * (b.y - a.y)) / d
-    const y = ((a.x ** 2 + a.y ** 2) * (b.x - c.x) + (b.x ** 2 + b.y ** 2) * (c.x - a.x) + (c.x ** 2 + c.y ** 2) * (a.x - b.x)) / d
-
-    return {
-        center: { x, y },
-        radius: Math.sqrt((a.x - x) ** 2 + (a.y - y) ** 2)
-    }
-}
-
-export const pointWithinCircle = (p: Point, circle: CircumCircle): boolean => {
-  const dx = p.x - circle.center.x
-  const dy = p.y - circle.center.y
-  const distSq = dx * dx + dy * dy
-  return distSq < circle.radius * circle.radius
-}
 
 export const delaunayTriangulation = (roomSpecifics: RoomSpecifics[]) => {
     const triangulation : Triangle[] = []

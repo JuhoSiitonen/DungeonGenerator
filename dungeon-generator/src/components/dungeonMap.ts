@@ -19,7 +19,7 @@ export function createMapAndRooms(
   const rng = seedrandom(seed)
   let roomCount = 0
   const roomSpecifics: RoomSpecifics[] = []
-  const map = createEmptyMap(60, 40)
+  const map: DungeonMapMatrix = createEmptyMap(60, 40)
 
   let attempts = 0
   const maxAttempts = numberOfRooms * 10
@@ -31,8 +31,8 @@ export function createMapAndRooms(
     const minRoomSize = 2
     const width = Math.floor(rng() * (map[0].length / 4)) + minRoomSize
     const height = Math.floor(rng() * (map.length / 4)) + minRoomSize
-    const x = Math.floor(rng() * (map[0].length - width))
-    const y = Math.floor(rng() * (map.length - height))
+    const x = Math.floor(rng() * (map[0].length - (width-1)))  
+    const y = Math.floor(rng() * (map.length - (height-1)))
 
     // Tarkistetaan että huone on tyhjä
     let isEmpty = true

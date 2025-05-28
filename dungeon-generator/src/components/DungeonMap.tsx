@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import type { DungeonMapMatrix } from './dungeonMap'
 import type { RoomSpecifics } from '../App'
-import { circumCircleCalculator } from './algorithms/delaunayTriangulation'
+import { circumCircleCalculator } from './algorithms/helpers'
 
 type Props = {
   dungeon: DungeonMapMatrix
@@ -59,9 +59,9 @@ export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics }: Props): JS
       ctx.strokeStyle = 'red'
       ctx.lineWidth = 1
       ctx.arc(
-        circle.center.x,
-        circle.center.y ,
-        circle.radius,
+        circle.center.x * tileSize,
+        circle.center.y * tileSize,
+        circle.radius * tileSize,
         0,
         2 * Math.PI
       )
