@@ -29,8 +29,8 @@ function BowyerWatson (pointList)
 */
 
 import type { RoomSpecifics } from "../../App";
-import type { Point, Triangle } from "./types";
-import { superTriangleCalculator } from "./helpers";
+import type { Edge, Point, Triangle } from "./types";
+import { pointWithinCircle, superTriangleCalculator } from "./helpers";
 
 
 export const delaunayTriangulation = (roomSpecifics: RoomSpecifics[]): Triangle[] => {
@@ -44,4 +44,17 @@ export const delaunayTriangulation = (roomSpecifics: RoomSpecifics[]): Triangle[
 
     const superTriangle = superTriangleCalculator(points);
     triangulation.push(superTriangle);
+
+    for (const point of points) {
+        const badTriangles: Triangle[] = [];
+
+        for (const triangle of triangulation) {
+            if (pointWithinCircle(point, triangle.circumcircle)) {
+                badTriangles.push(triangle);
+            }
+        }
+
+        const polygon: Edge[] = [];
+        
+    }
 }
