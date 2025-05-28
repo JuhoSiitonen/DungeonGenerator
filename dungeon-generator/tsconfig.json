@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "react-jsx",
-    "types": ["react"]
+    "types": ["react", "vitest/globals", "@testing-library/jest-dom"]
   },
   "files": [],
   "references": [

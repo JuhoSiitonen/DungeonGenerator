@@ -1,4 +1,4 @@
-import type { Point, CircumCircle, Edge } from "./types"
+import type { Point, CircumCircle, Edge, Triangle } from "./types"
 
 
 export const circumCircleCalculator = (a: Point, b: Point, c: Point): CircumCircle  => {
@@ -26,7 +26,6 @@ export const circumCircleCalculator = (a: Point, b: Point, c: Point): CircumCirc
     }
 }
 
-
 export const pointWithinCircle = (p: Point, circle: CircumCircle): boolean => {
   const dx = p.x - circle.center.x
   const dy = p.y - circle.center.y
@@ -38,3 +37,36 @@ export const edgesEqual = (e1: Edge, e2: Edge): boolean => {
     return e1.a === e2.a && e1.b === e2.b ||
            e1.a === e2.b && e1.b === e2.a
 }
+
+export const superTriangleCalculator = (points: Point[]): Triangle => {
+    // Lasketaan ns superkolmio, joka on tarpeeksi suuri kattamaan kaikki pisteet triangulaation alussa
+    // Käytetään minimi ja maksimi arvoja pisteiden koordinaateista
+
+    if (points.length < 3) {
+        throw new Error("Tarvitaan vähintään kolme pistettä")
+    }
+
+    const minX = Math.min(...points.map(p => p.x))
+    const maxX = Math.max(...points.map(p => p.x))
+    const minY = Math.min(...points.map(p => p.y))
+    const maxY = Math.max(...points.map(p => p.y))
+
+    const dx = maxX - minX
+    const dy = maxY - minY
+    const dmax = Math.max(dx, dy)
+
+    const midX = (minX + maxX) / 2
+    const midY = (minY + maxY) / 2
+
+    return {coordinates: [
+            { x: midX - 20 * dmax, y: midY - dmax },
+            { x: midX, y: midY + 20 * dmax },
+            { x: midX + 20 * dmax, y: midY - dmax }
+        ],
+        circumcircle: circumCircleCalculator(
+            { x: midX - 20 * dmax, y: midY - dmax },
+            { x: midX, y: midY + 20 * dmax },
+            { x: midX + 20 * dmax, y: midY - dmax }
+        )
+        
+}}

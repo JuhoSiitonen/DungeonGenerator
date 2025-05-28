@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 
 /*
 Pseudokoodi Bowyer-Watson algoritmille jolla toteutetaan Delaunay triangulaatio (lähde wikipedia)
@@ -28,15 +28,20 @@ function BowyerWatson (pointList)
     return triangulation
 */
 
-import type { Triangle } from "three";
 import type { RoomSpecifics } from "../../App";
-import type { Point, CircumCircle } from "./types";
+import type { Point, Triangle } from "./types";
+import { superTriangleCalculator } from "./helpers";
 
 
-export const delaunayTriangulation = (roomSpecifics: RoomSpecifics[]) => {
+export const delaunayTriangulation = (roomSpecifics: RoomSpecifics[]): Triangle[] => {
+    if (roomSpecifics.length < 3) return []
+    
     const triangulation : Triangle[] = []
     const points: Point[] = roomSpecifics.map((room) => ({
         x: room.xCenter,
         y: room.yCenter,
     }))
+
+    const superTriangle = superTriangleCalculator(points);
+    triangulation.push(superTriangle);
 }

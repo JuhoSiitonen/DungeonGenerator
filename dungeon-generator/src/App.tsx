@@ -12,7 +12,7 @@ export interface RoomSpecifics {
 function App() {
   const [map, setMap] = useState<DungeonMapMatrix>([])
   const [roomCount, setRoomCount] = useState(0)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const [roomSpecifics, setRoomSpecifics] = useState<RoomSpecifics[]>([])
   
   const generateRooms = (e: React.SyntheticEvent) => {
