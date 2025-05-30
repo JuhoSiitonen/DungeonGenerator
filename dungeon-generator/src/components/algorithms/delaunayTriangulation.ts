@@ -30,7 +30,7 @@ function BowyerWatson (pointList)
 
 import type { RoomSpecifics } from "../../App";
 import type { Edge, Point, Triangle } from "./types";
-import { pointWithinCircle, superTriangleCalculator } from "./helpers";
+import { circumCircleCalculator, edgesEqual, pointWithinCircle, superTriangleCalculator } from "./helpers";
 
 
 export const delaunayTriangulation = (roomSpecifics: RoomSpecifics[]): Triangle[] => {
@@ -42,12 +42,15 @@ export const delaunayTriangulation = (roomSpecifics: RoomSpecifics[]): Triangle[
         y: room.yCenter,
     }))
 
+    // Lasketaan superkolmio, joka on tarpeeksi suuri kattamaan kaikki pisteet triangulaation alussa
     const superTriangle = superTriangleCalculator(points);
     triangulation.push(superTriangle);
+
 
     for (const point of points) {
         const badTriangles: Triangle[] = [];
 
+        // Etsitään kaikki kolmiot, joiden ympyräpiiri sisältää pisteen
         for (const triangle of triangulation) {
             if (pointWithinCircle(point, triangle.circumcircle)) {
                 badTriangles.push(triangle);
@@ -55,6 +58,71 @@ export const delaunayTriangulation = (roomSpecifics: RoomSpecifics[]): Triangle[
         }
 
         const polygon: Edge[] = [];
+
+        // Etsitään kaikki reunat, joita ei ole jaettu muiden huonojen kolmioiden kanssa
+        for (const triangle of badTriangles) {
+            const edges: Edge[] = [
+                { a: triangle.coordinates[0], b: triangle.coordinates[1] },
+                { a: triangle.coordinates[1], b: triangle.coordinates[2] },
+                { a: triangle.coordinates[2], b: triangle.coordinates[0] }
+            ]
         
+            for (const edge of edges) {
+                let isShared = false
+                for (const otherTriangle of badTriangles) {
+                    if (otherTriangle === triangle) continue
+                    
+                    const otherEdges: Edge[] = [
+                        { a: otherTriangle.coordinates[0], b: otherTriangle.coordinates[1] },
+                        { a: otherTriangle.coordinates[1], b: otherTriangle.coordinates[2] },
+                        { a: otherTriangle.coordinates[2], b: otherTriangle.coordinates[0] }
+                    ]
+                    
+                    for (const otherEdge of otherEdges) {
+                        if (edgesEqual(edge, otherEdge)) {
+                            isShared = true
+                            break
+                        }
+                    }
+                    if (isShared) break
+                }
+                
+                // Jos reunaa ei ole jaettu muiden huonojen kolmioiden kanssa, lisätään se monikulmioon
+                if (!isShared) {
+                    polygon.push(edge)
+                }
+            }
+
+            for (const badTriangle of badTriangles) {
+                const index = triangulation.indexOf(badTriangle)
+                if (index > -1) {
+                    triangulation.splice(index, 1)
+                }
+            }
+        }
+
+        // Luodaan uudet kolmiot monikulmion reunoista ja silmukan tämän hetkisestä point arvosta
+        //  ja lisätään ne triangulaatioon
+        for (const edge of polygon) {
+            const newTriangle: Point[] = [edge.a, edge.b, point]
+            triangulation.push({
+                coordinates: newTriangle,
+                circumcircle: circumCircleCalculator(newTriangle[0], newTriangle[1], newTriangle[2])
+            })
+        }
     }
+
+    // Lopuksi poistetaan kolmiot joissa on vielä superkolmion kärkiä
+    const finalTriangulation = triangulation.filter(triangle => {
+        for (const vertex of triangle.coordinates) {
+            
+            for (const superVertex of superTriangle.coordinates) {
+                if (vertex.x === superVertex.x && vertex.y === superVertex.y) {
+                    return false
+                }
+            }
+        }
+        return true
+    })
+    return finalTriangulation
 }
