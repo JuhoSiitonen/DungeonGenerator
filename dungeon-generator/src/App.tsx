@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { DungeonMap }  from "./components/DungeonMap.tsx"
-import { createMapAndRooms, type DungeonMapMatrix } from "./components/dungeonMap"
+import { createMapAndRooms } from "./components/dungeonMap"
 import { VisualizationControls } from "./components/VisualizationControls.tsx"
+import type { DungeonMapMatrix } from "./components/types.ts"
 
 export interface RoomSpecifics {
   width: number,
@@ -15,11 +16,9 @@ function App() {
   const [roomCount, setRoomCount] = useState(0)
   const [roomSpecifics, setRoomSpecifics] = useState<RoomSpecifics[]>([])
    const [visualOptions, setVisualOptions] = useState({
-    showRooms: true,
     showTriangles: true,
     showCircumcircles: true,
     showRoomCenters: true,
-    showConnections: true,
     showRoomNumbers: true
   })
   
@@ -46,7 +45,7 @@ function App() {
         </form>    
       <VisualizationControls options={visualOptions} onChange={handleVisualOptionChange} />
       {map.length > 0 &&
-      <DungeonMap dungeon={map} tileSize={12} roomSpecifics={roomSpecifics}/>
+      <DungeonMap dungeon={map} tileSize={12} roomSpecifics={roomSpecifics} visualOptions={visualOptions}/>
      }
     </div>
   )

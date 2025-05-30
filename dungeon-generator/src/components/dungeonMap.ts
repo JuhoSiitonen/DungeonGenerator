@@ -1,9 +1,7 @@
 import type { RoomSpecifics } from "../App"
 import seedrandom from 'seedrandom'
+import type { DungeonMapMatrix } from "./types"
 
-export type Tile = 'empty' | 'room' | 'corridor'
-
-export type DungeonMapMatrix = Tile[][]
 
 export function createEmptyMap(width: number, height: number): DungeonMapMatrix {
   return Array.from({ length: height }, () =>

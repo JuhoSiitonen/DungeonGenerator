@@ -1,15 +1,9 @@
 import { useEffect, useRef } from 'react'
-import type { DungeonMapMatrix } from './dungeonMap'
-import type { RoomSpecifics } from '../App'
-import { circumCircleCalculator } from './algorithms/helpers'
+import { delaunayTriangulation } from './algorithms/delaunayTriangulation'
+import type { DungeonMapProps } from './types'
 
-type Props = {
-  dungeon: DungeonMapMatrix
-  tileSize?: number
-  roomSpecifics?: RoomSpecifics[]
-}
 
-export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics }: Props): JSX.Element => {
+export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOptions }: DungeonMapProps): JSX.Element => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   
   useEffect(() => {
@@ -21,61 +15,109 @@ export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics }: Props): JS
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    dungeon.forEach((row, y) => {
-      row.forEach((tile, x) => {
-        switch (tile) {
-          case 'empty':
-            ctx.fillStyle = '#111'
-            break
-          case 'room':
-            ctx.fillStyle = '#4caf50'
-            break
-          case 'corridor':
-            ctx.fillStyle = '#2196f3'
-            break
-        }
-        ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize)
+    // 1. Piirrä luolasto pohja 
+      dungeon.forEach((row, y) => {
+        row.forEach((tile, x) => {
+          switch (tile) {
+            case 'empty':
+              ctx.fillStyle = '#111'
+              break
+            case 'room':
+              ctx.fillStyle = '#4caf50'
+              break
+            case 'corridor':
+              ctx.fillStyle = '#2196f3'
+              break
+          }
+          ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize)
+        })
       })
-    })
-
-    console.log(roomSpecifics)
     
-    if (roomSpecifics && roomSpecifics.length >= 3) {
-    for (let i = 0; i < roomSpecifics.length - 2; i++) {
-      const p1 = roomSpecifics[i]
-      const p2 = roomSpecifics[i + 1]
-      const p3 = roomSpecifics[i + 2]
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const canvasHeight = dungeon.length
-      const circle = circumCircleCalculator(
-        { x: p1.xCenter, y:  p1.yCenter },
-        { x: p2.xCenter, y:  p2.yCenter },
-        { x: p3.xCenter, y:  p3.yCenter }
-      )
-      console.log('Drawing circle at:', circle.center.x, circle.center.y, 'radius:', circle.radius)
-
-      ctx.beginPath()
-      ctx.strokeStyle = 'red'
-      ctx.lineWidth = 1
-      ctx.arc(
-        circle.center.x * tileSize,
-        circle.center.y * tileSize,
-        circle.radius * tileSize,
-        0,
-        2 * Math.PI
-      )
-      ctx.stroke()
+    if (roomSpecifics.length > 3) {
+      const triangles = delaunayTriangulation(roomSpecifics)
+      
+      // 2. Piirrä kolmioiden reunat
+      if (visualOptions.showTriangles) {
+        ctx.strokeStyle = '#FFD700' // Kulta
+        ctx.lineWidth = 3
+        triangles.forEach((triangle, index) => {
+          ctx.beginPath()
+          ctx.moveTo(triangle.coordinates[0].x * tileSize, triangle.coordinates[0].y * tileSize)
+          ctx.lineTo(triangle.coordinates[1].x * tileSize, triangle.coordinates[1].y * tileSize)
+          ctx.lineTo(triangle.coordinates[2].x * tileSize, triangle.coordinates[2].y * tileSize)
+          ctx.closePath()
+          ctx.stroke()
+          
+          // Kolmion numero keskelle
+          if (visualOptions.showRoomNumbers) {
+            const centerX = (triangle.coordinates[0].x + triangle.coordinates[1].x + triangle.coordinates[2].x) / 3 * tileSize
+            const centerY = (triangle.coordinates[0].y + triangle.coordinates[1].y + triangle.coordinates[2].y) / 3 * tileSize
+            ctx.fillStyle = 'yellow'
+            ctx.font = '14px Arial'
+            ctx.textAlign = 'center'
+            ctx.fillText(`T${index + 1}`, centerX, centerY)
+          }
+        })
+      }
+      
+      // 3. Piirrä ympyränkehät
+      if (visualOptions.showCircumcircles) {
+        ctx.strokeStyle = '#FF4444' // Punainen
+        ctx.lineWidth = 2
+        triangles.forEach((triangle) => {
+          const circle = triangle.circumcircle
+          ctx.beginPath()
+          ctx.arc(
+          circle.center.x * tileSize,
+          circle.center.y * tileSize,
+          circle.radius * tileSize,
+          0,
+          2 * Math.PI
+          )
+          ctx.stroke()
+            
+          // Ympyrän keskipiste
+          ctx.fillStyle = '#FF4444'
+          ctx.beginPath()
+          ctx.arc(circle.center.x * tileSize, circle.center.y * tileSize, 3, 0, 2 * Math.PI)
+          ctx.fill()
+          
+        })
+      }
+      
     }
-  }
-    }, [dungeon, tileSize, roomSpecifics])
+    
+    // 4. Piirrä huoneiden keskipisteet ja numerot
+    if (visualOptions.showRoomCenters) {
+      roomSpecifics.forEach((room, index) => {
+        // Piste  
+        ctx.fillStyle = 'white'
+        ctx.beginPath()
+        ctx.arc(room.xCenter * tileSize, room.yCenter * tileSize, 7, 0, 2 * Math.PI)
+        ctx.fill()
+        ctx.strokeStyle = 'black'
+        ctx.lineWidth = 2
+        ctx.stroke()
+        
+        // Numero
+        if (visualOptions.showRoomNumbers) {
+          ctx.fillStyle = 'black'
+          ctx.font = 'bold 12px Arial'
+          ctx.textAlign = 'center'
+          ctx.fillText(`${index + 1}`, room.xCenter * tileSize, room.yCenter * tileSize + 4)
+        }
+      })
+    }
+    
+  }, [dungeon, roomSpecifics, tileSize, visualOptions])
 
   return (
     <canvas
       ref={canvasRef}
-      width={dungeon[0].length * tileSize}
-      height={dungeon.length * tileSize}
-      style={{ border: '1px solid #555' }}
+      width={dungeon[0]?.length * tileSize || 600}
+      height={dungeon.length * tileSize || 400}
+      style={{ border: '2px solid #333', borderRadius: '8px' }}
     />
   )
 }
