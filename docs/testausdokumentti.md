@@ -15,3 +15,7 @@ Ohjelmiston testit voi ajaa komennolla
 **npm run test:run**
 Testien kattavuusraportin saa komennolla
 **npm run test:coverage**
+
+## Testauskattavuus
+[Testauskattavuus](image.png)
+
