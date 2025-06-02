@@ -92,7 +92,7 @@ function App() {
 
         {isDevOrPreProd && useManualInput ? (
           <div style={{ marginBottom: '16px' }}>
-            <h3>Manual Room Specifications</h3>
+            <h3>Manuaalinen huoneiden lisäys</h3>
             {manualRoomInputs.map((room, index) => (
               <div key={index} style={{ 
                 border: '1px solid #ccc', 
@@ -142,7 +142,7 @@ function App() {
                   onClick={() => removeManualRoom(index)}
                   style={{ marginTop: '8px'}}
                 >
-                  Remove Room
+                  Poista huone
                 </button>
               </div>
             ))}
@@ -151,7 +151,7 @@ function App() {
               onClick={addManualRoom}
               style={{ margin: '8px 0' }}
             >
-              Add Room
+              Lisää huone
             </button>
           </div>
         ) : (
