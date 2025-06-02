@@ -36,10 +36,8 @@ export const pointWithinCircle = (p: Point, circle: CircumCircle): boolean => {
 export const edgesEqual = (e1: Edge, e2: Edge): boolean => {
     // Tarkistetaan ovatko reunat samat, riippumatta siitä missä järjestyksessä pisteet ovat
 
-    return e1.a.x === e2.a.x && e1.b.x === e2.b.x ||
-           e1.a.x === e2.b.x && e1.b.x === e2.a.x &&
-           e1.a.y === e2.a.y && e1.b.y === e2.b.y ||
-           e1.a.y === e2.b.y && e1.b.y === e2.a.y
+     return (e1.a.x === e2.a.x && e1.a.y === e2.a.y && e1.b.x === e2.b.x && e1.b.y === e2.b.y) ||
+           (e1.a.x === e2.b.x && e1.a.y === e2.b.y && e1.b.x === e2.a.x && e1.b.y === e2.a.y)
 }
 
 export const superTriangleCalculator = (points: Point[]): Triangle => {
