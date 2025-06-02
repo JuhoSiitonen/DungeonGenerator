@@ -30,9 +30,16 @@ function App() {
   
   const generateRooms = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    const { roomSpecifics, map } = createMapAndRooms( roomCount, "1234")
-    setMap(map)
-    setRoomSpecifics(roomSpecifics)
+
+    if (isDevOrPreProd && useManualInput) {
+      const { roomSpecifics: manualCorrectedSpecifics, map } = createMapAndRooms(manualRoomInputs.length, "1234", manualRoomInputs)
+      setMap(map)
+      setRoomSpecifics(manualCorrectedSpecifics)
+    } else {
+      const { roomSpecifics, map } = createMapAndRooms(roomCount, "1234")
+      setMap(map)
+      setRoomSpecifics(roomSpecifics)
+    }
   }
 
   const handleVisualOptionChange = (key: string, value: boolean) => {
