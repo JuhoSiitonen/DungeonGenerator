@@ -13,7 +13,7 @@ Käyttöliittymän testaus, ei ole vielä mukana suunnitelmissa, mutta Playwrigh
 ### Delaunay triangulaation testaus
 Triangulaation testauksessa hyödynsin tunnettua kaavaa triangulaatiossa syntyvien kolmioiden määrän laskemiselle
 
-Kolmioiden määrä = 2n - 2 - k (jossa n on kaikkien reittipisteiden määrä ja k on konveksisen hilan reunapisteiden määrä) 
+**Kolmioiden määrä = 2n - 2 - k (jossa n on kaikkien reittipisteiden määrä ja k on konveksisen hilan reunapisteiden määrä)**
 
 Esimerkkinä pisteet jotka muodostavat neliön, näille triangulaatio muodostaisi (2*4 -2 -4 = 2) kaksi kolmioa.
 Jos "neliön" sisällä olisi vielä yksi piste, laskukaavan mukaan saataisi kolmioiden määräksi (2*5 -2 -4 = 4) neljä.
