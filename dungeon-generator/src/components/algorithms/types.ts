@@ -18,3 +18,12 @@ export interface Edge {
     a: Point
     b: Point
 }
+
+export interface WeightedEdge extends Edge {
+    weight: number;
+}
+
+export interface MST {
+    edges: WeightedEdge[];
+    totalWeight: number;
+}

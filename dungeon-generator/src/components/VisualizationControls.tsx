@@ -6,6 +6,7 @@ export const VisualizationControls = ({ options, onChange }: {
     showCircumcircles: boolean
     showRoomCenters: boolean
     showRoomNumbers: boolean
+    showMST: boolean
   }
   onChange: (key: string, value: boolean) => void
 }) => (
@@ -24,6 +25,7 @@ export const VisualizationControls = ({ options, onChange }: {
             {key === 'showCircumcircles' && 'Näytä ympyränkehät'}
             {key === 'showRoomCenters' && 'Näytä keskipisteet'}
             {key === 'showRoomNumbers' && 'Näytä numerot'}
+            {key === 'showMST' && 'Näytä MST'}
           </span>
         </label>
       ))}

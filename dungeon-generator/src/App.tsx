@@ -22,7 +22,8 @@ function App() {
     showTriangles: true,
     showCircumcircles: true,
     showRoomCenters: true,
-    showRoomNumbers: true
+    showRoomNumbers: true,
+    showMST: true
   })
 
   const [manualRoomInputs, setManualRoomInputs] = useState<RoomSpecifics[]>([])

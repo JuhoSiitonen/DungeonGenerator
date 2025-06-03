@@ -70,5 +70,31 @@ export const superTriangleCalculator = (points: Point[]): Triangle => {
             { x: midX, y: midY + 20 * dmax },
             { x: midX + 20 * dmax, y: midY - dmax }
         )
-        
 }}
+
+export const calculateDistance = (p1: Point, p2: Point): number => {
+    const dx = p1.x - p2.x;
+    const dy = p1.y - p2.y;
+    return Math.sqrt(dx * dx + dy * dy);
+};
+
+export const pointsEqual = (p1: Point, p2: Point): boolean => {
+    return p1.x === p2.x && p1.y === p2.y;
+};
+
+export const getUniquePoints = (triangulation: Triangle[]): Point[] => {
+    const pointSet = new Set<string>();
+    const points: Point[] = [];
+    
+    for (const triangle of triangulation) {
+        for (const point of triangle.coordinates) {
+            const key = `${point.x},${point.y}`;
+            if (!pointSet.has(key)) {
+                pointSet.add(key);
+                points.push(point);
+            }
+        }
+    }
+    
+    return points;
+};

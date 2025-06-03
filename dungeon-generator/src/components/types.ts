@@ -12,6 +12,7 @@ export type DungeonMapProps = {
     showCircumcircles: boolean
     showRoomCenters: boolean
     showRoomNumbers: boolean
+    showMST: boolean
   }
 }
 

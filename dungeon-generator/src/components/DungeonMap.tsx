@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { delaunayTriangulation } from './algorithms/delaunayTriangulation'
 import type { DungeonMapProps } from './types'
+import { getMSTLines, primsAlgorithm } from './algorithms/minimumSpanningTree'
+import type { Point } from './algorithms/types'
 
 
 export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOptions }: DungeonMapProps): JSX.Element => {
@@ -36,6 +38,11 @@ export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOption
 
     if (roomSpecifics.length > 3) {
       const triangles = delaunayTriangulation(roomSpecifics)
+      let mstEdges: Array<{start: Point, end: Point}> = []
+      if (triangles.length) {
+        const mst = primsAlgorithm(triangles)
+        mstEdges = getMSTLines(mst)
+      }
       
       // 2. Piirrä kolmioiden reunat
       if (visualOptions.showTriangles) {
@@ -59,6 +66,22 @@ export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOption
             ctx.fillText(`T${index + 1}`, centerX, centerY)
           }
         })
+      }
+
+       // 2.5. Piirrä MST reunat
+      if (visualOptions.showMST && mstEdges.length > 0) {
+        ctx.strokeStyle = '#FF6B35' 
+        ctx.lineWidth = 4
+        ctx.setLineDash([5, 5]) // Katkoviiva
+        
+        mstEdges.forEach((edge) => {
+          ctx.beginPath()
+          ctx.moveTo(edge.start.x * tileSize, edge.start.y * tileSize)
+          ctx.lineTo(edge.end.x * tileSize, edge.end.y * tileSize)
+          ctx.stroke()
+        })
+        
+        ctx.setLineDash([])
       }
       
       // 3. Piirrä ympyränkehät
