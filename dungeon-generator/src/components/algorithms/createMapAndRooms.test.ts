@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { createEmptyMap, createMapAndRooms } from './dungeonMap'
+import { createEmptyMap, createMapAndRooms } from './createMapAndRooms'
 
 describe('Dungeon Map Generation', () => {
   describe('createEmptyMap', () => {

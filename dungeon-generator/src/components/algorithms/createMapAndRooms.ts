@@ -1,6 +1,16 @@
-import type { RoomSpecifics } from "../App"
+import type { RoomSpecifics } from "../types"
 import seedrandom from 'seedrandom'
-import type { DungeonMapMatrix } from "./types"
+import type { DungeonMapMatrix } from "../types"
+
+/**
+ * Huoneiden luomisessa käytetään satunnaista seed-arvoa, jotta saadaan toistettavat tulokset.
+ * Huoneiden luomisessa käytetään satunnaista leveys- ja korkeusarvoa jotka ovat suurempia kuin 2.
+ * Huoneiden koordinaatit lasketaan satunnaisesti kartan koordinaattien perusteella ottaen huomioon huoneen leveys ja korkeus.
+ * Huoneiden luomisessa tarkistetaan että huone on tyhjä, eli että se ei mene päällekkäin muiden huoneiden kanssa.
+ * Huoneiden luomisessa käytetään maxAttempts arvoa, joka on 10 kertaa huoneiden määrä, jotta vältetään loputon silmukka.
+ * Kaksi eri funktiota on käytössä, koska kehitysympäristössä käyttäjä voi syöttää huoneiden koordinaatit 
+ * manuaalisesti, mutta tuotantoympäristössä huoneet luodaan satunnaisesti.
+ */
 
 
 export function createEmptyMap(width: number, height: number): DungeonMapMatrix {
@@ -97,8 +107,7 @@ function createMapWithManualRooms(
     
     // Tarkista että huone mahtuu karttaan
     if (x + width > map[0].length || y + height > map.length) {
-      console.warn(`Huone jonka keskipiste on (${xCenter}, ${yCenter}) ja koko ${width}x${height} ei mahdu karttaan`)
-      continue
+      throw new Error(`Huone ei mahdu karttaan: ${JSON.stringify(room)}`)
     }
     
     let isEmpty = true
@@ -111,11 +120,7 @@ function createMapWithManualRooms(
       }
       if (!isEmpty) break
     }
-    
-    if (!isEmpty) {
-      console.warn(`(${xCenter}, ${yCenter}) Päällekkäiset huoneet`)
-    }
-    
+
     for (let i = y; i < y + height; i++) {
       for (let j = x; j < x + width; j++) {
         map[i][j] = 'room'

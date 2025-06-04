@@ -1,5 +1,3 @@
- 
-
 /*
 Pseudokoodi Bowyer-Watson algoritmille jolla toteutetaan Delaunay triangulaatio (lähde wikipedia)
 
@@ -28,7 +26,7 @@ function BowyerWatson (pointList)
     return triangulation
 */
 
-import type { RoomSpecifics } from "../../App";
+import type { RoomSpecifics } from "../types";
 import type { Edge, Point, Triangle } from "./types";
 import { circumCircleCalculator, edgesEqual, pointWithinCircle, superTriangleCalculator } from "./helpers";
 

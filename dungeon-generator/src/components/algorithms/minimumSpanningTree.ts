@@ -1,8 +1,42 @@
 import { calculateDistance, getUniquePoints, pointsEqual } from "./helpers";
 import type { Point, Triangle, MST, WeightedEdge } from "./types";
 
+/**
+ * Pseudokoodi Primin MST algoritmille
+ * 
+ * function Prim(vertices, edges) is
+    for each vertex in vertices do
+        cheapestCost[vertex] ← ∞
+        cheapestEdge[vertex] ← null
 
-// Lasketaan reunojen painot triangulaatiosta
+    explored ← empty set
+    unexplored ← set containing all vertices
+
+    startVertex ← any element of vertices
+    cheapestCost[startVertex] ← 0
+
+    while unexplored is not empty do
+        // Select vertex in unexplored with minimum cost
+        currentVertex ← vertex in unexplored with minimum cheapestCost[vertex]
+        unexplored.remove(currentVertex)
+        explored.add(currentVertex)
+
+        for each edge (currentVertex, neighbor) in edges do
+            if neighbor in unexplored and weight(currentVertex, neighbor) < cheapestCost[neighbor] THEN
+                cheapestCost[neighbor] ← weight(currentVertex, neighbor)
+                cheapestEdge[neighbor] ← (currentVertex, neighbor)
+
+    resultEdges ← empty list
+    for each vertex in vertices do
+        if cheapestEdge[vertex] ≠ null THEN
+            resultEdges.append(cheapestEdge[vertex])
+
+    return resultEdges
+ */
+
+
+// Lasketaan reunojen painot triangulaatiosta ja muutetaan triangulaation kolmiot
+// reunojen listaksi, jossa jokaisella reunalla on paino
 export const triangulationToEdges = (triangulation: Triangle[]): WeightedEdge[] => {
     const edgeMap = new Map<string, WeightedEdge>();
     

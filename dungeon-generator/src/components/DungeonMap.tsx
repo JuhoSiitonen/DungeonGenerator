@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type JSX } from 'react'
 import { delaunayTriangulation } from './algorithms/delaunayTriangulation'
 import type { DungeonMapProps } from './types'
 import { getMSTLines, primsAlgorithm } from './algorithms/minimumSpanningTree'

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { delaunayTriangulation } from './delaunayTriangulation' 
-import type { RoomSpecifics } from '../../App'
+import type { RoomSpecifics } from '../types'
 import type { Point } from './types'
 
 // Delaunay triangluaatiossa syntyvien kolmioiden määrän laskemiseen on tunnettu kaava: 2n - 2 - k 

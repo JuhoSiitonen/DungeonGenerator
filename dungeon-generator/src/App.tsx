@@ -1,15 +1,8 @@
 import { useState } from "react"
 import { DungeonMap }  from "./components/DungeonMap.tsx"
-import { createMapAndRooms } from "./components/dungeonMap"
+import { createMapAndRooms } from "./components/algorithms/createMapAndRooms.ts"
 import { VisualizationControls } from "./components/VisualizationControls.tsx"
-import type { DungeonMapMatrix } from "./components/types.ts"
-
-export interface RoomSpecifics {
-  width: number,
-  height: number,
-  xCenter: number,
-  yCenter: number
-}
+import type { DungeonMapMatrix, RoomSpecifics } from "./components/types.ts"
 
 const ENV = import.meta.env.MODE || 'production'
 const isDevOrPreProd = ENV === 'development' 
@@ -67,16 +60,6 @@ function App() {
   return (
     <div>
       <h1>2D Luolaston visualisointi</h1>
-         {isDevOrPreProd && (
-          <div style={{ 
-          padding: '8px', 
-          border: '1px solid #2196f3', 
-          borderRadius: '4px', 
-          marginBottom: '16px' 
-        }}>
-          <strong> Testiympäristö manuaalinen huoneiden syöttö mahdollinen </strong>
-        </div>
-      )}
         <form onSubmit={generateRooms}>
         {isDevOrPreProd && (
           <div style={{ marginBottom: '16px' }}>
