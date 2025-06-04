@@ -39,6 +39,8 @@ https://en.wikipedia.org/wiki/Bowyer%E2%80%93Watson_algorithm
 
 https://en.wikipedia.org/wiki/Prim%27s_algorithm
 
+https://en.wikipedia.org/wiki/Breadth-first_search
+
 https://en.wikipedia.org/wiki/Circumcircle
 
 https://en.wikipedia.org/wiki/A*_search_algorithm
@@ -51,5 +53,6 @@ https://www.redblobgames.com/pathfinding/a-star/introduction.html
 
 ### Ohjelmiston käytössä tekoälyä on käytetty seuraavasti
 
-- ChatGPT GPT-4o mallia hyödynnettiin Delaunay triangulaation selittämisessä
+- ChatGPT GPT-4o mallia hyödynnettiin Delaunay triangulaation ymmärtämisessä. Miksi sitä tarvitaan, mitä se tekee, miksi se on hyvä tässä asiassa.
+
 

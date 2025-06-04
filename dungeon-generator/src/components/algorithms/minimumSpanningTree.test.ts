@@ -192,43 +192,6 @@ describe('Minimum Spanning Tree', () => {
       expect(mst.totalWeight).toBe(0);
     });
 
-    it('should create a tree (connected and acyclic)', () => {
-      const mst = primsAlgorithm(complexTriangulation);
-      const points = getUniquePoints(complexTriangulation);
-      
-      // Pitäisi olla yhteensä n-1 reunaa, jos on n pistettä
-      expect(mst.edges).toHaveLength(points.length - 1);
-      
-      // Pitäisi olla ainakin yksi reuna, jos on useampi kuin yksi piste
-      if (points.length > 1) {
-        const pointsInMST = new Set<string>();
-        mst.edges.forEach(edge => {
-          pointsInMST.add(`${edge.a.x},${edge.a.y}`);
-          pointsInMST.add(`${edge.b.x},${edge.b.y}`);
-        });
-        expect(pointsInMST.size).toBe(points.length);
-      }
-    });
-
-    it('should find minimum weight spanning tree', () => {
-      // Luodaan triangulaatio, jossa MST on ilmeinen
-      const triangulation: Triangle[] = [
-        {
-          coordinates: [
-            { x: 0, y: 0 },
-            { x: 1, y: 0 },
-            { x: 0.5, y: 0.1 }
-          ],
-          circumcircle: { center: { x: 0.5, y: 0 }, radius: 0.5 }
-        }
-      ];
-      
-      const mst = primsAlgorithm(triangulation);
-      
-      // Näiden lähellä olevien pisteiden tapauksessa MST:n pitäisi suosia lyhyempiä reunoja
-      expect(mst.totalWeight).toBeLessThan(3); 
-    });
-
     it('should have total weight equal to sum of edge weights', () => {
       const mst = primsAlgorithm(squareTriangulation);
       

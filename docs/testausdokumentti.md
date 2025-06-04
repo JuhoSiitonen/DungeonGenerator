@@ -25,7 +25,19 @@ Triangulaation suhteen testataan myös että kaikki annetut huoneet ovat triangu
 
 ## Minimum spanning tree algoritmin testaus
 
+Pienimmän virittävän puun etsivää Primin algoritmia testattiin käsin kasatuilla triangulaatioilla jotka luotiin ohjelmiston omalla triangulaatio algoritmilla. Toistaiseksi käytössä on aika pieniä triangulaatioita kolmiosta viisikulmioon.
 
+Ensin testatataan että apufunktio (triangulationToEdges) osaa purkaa triangulaation reunoiksi ja antaa niille painon, tehden niistä listan weightedEdge tyyppisiä objekteja. Apufunktio palauttaa vain uniikit reunat ja tyhjän triangulaation kanssa se palauttaa tyhjän listan.
+
+Myös apufunktio (getUniquePoints) testataan, jotta se osaa palauttaa vain uniikit pisteet.
+
+Itse Primin algoritmin testauksessa hyödynnetään tietoa siitä että esim kolmion MST sisältää vain kaksi reunaa ja neliön sisältää kolme, yms yms (tässä toki käytetään hyvin yksinkertaisia kuvioita, jatkossa tähän tulisi kyllä kehittää jokin hieman hankalampikin). 
+
+MST suhteen käytetään BFS algoritmia testaamaan että kaikkiin pisteisiin päästään kaaria pitkin. 
+
+Asyklisyys todetaan testeissä pisteiden ja kaarien perusteella. 
+
+**PUUTTEET: MST:tä ei ole vielä testattu sen suhteen että se tuottaisi oikeasti pienimmän virittävän puun. Tähän pitää vielä kehittää jokin käsin tarkistettu kokoelma pisteitä**
 
 ## Miten testataan
 Ohjelmiston testit voi ajaa komennolla 
