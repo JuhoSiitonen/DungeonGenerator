@@ -10,6 +10,8 @@ Tärkein olisi testata kaikkia luotuja algoritmeja ja niiden osioita yksitellen.
 
 Käyttöliittymän testaus, ei ole vielä mukana suunnitelmissa, mutta Playwright tai Cypress olisi helppo lisätä tähän jotta käyttöliittymää voisi testata. Käyttöliittymän React komponentit on rajattu pois testauksesta, mutta kaikki mahdollinen logiikka jonka pystyi irroittamaan käyttöliittymä komponenteista on yksikkötestauksen piirissä. 
 
+Käyttöliittymän React komponentit on eristetty pois testauskattavuuden laskelmista.
+
 ### Delaunay triangulaation testaus
 Triangulaation testauksessa hyödynsin tunnettua kaavaa triangulaatiossa syntyvien kolmioiden määrän laskemiselle
 
@@ -20,6 +22,10 @@ Jos "neliön" sisällä olisi vielä yksi piste, laskukaavan mukaan saataisi kol
 Hahmottelin paperille parin eri triangulaation konveksisen hilan pisteet, sekä joitain hilan sisään jääviä pisteitä ja laskin testeihin laskukaavalla oikeat vastaukset. Näihin kuuluu myös selkeä kolmen pisteen muodostaman kolmion triangulaatiossa muodostuva yksi kolmio. 
 
 Triangulaation suhteen testataan myös että kaikki annetut huoneet ovat triangulaation lopputuloksessa mukana eikä lopputulokseen ole päätynyt algoritmin alussa käytettävän superkolmion pisteitä. 
+
+## Minimum spanning tree algoritmin testaus
+
+
 
 ## Miten testataan
 Ohjelmiston testit voi ajaa komennolla 
