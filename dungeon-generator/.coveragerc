@@ -1,0 +1,8 @@
+{
+  "exclude": [
+    "**/*.{jsx,tsx}",
+    "**/types/**",
+    "**/*.types.{ts,js}",
+    "**/components/**"
+  ]
+}

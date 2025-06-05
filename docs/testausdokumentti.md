@@ -53,5 +53,8 @@ Komento luo kansion coverage jonka sisältä src/index saa kattavuusraportin nä
 
 
 ## Testauskattavuus
-[Testauskattavuus](image.png)
+
+Testauskattavuudesta on otettu pois React komponentit, niille ehkä kehitetään vielä oma E2E testi tai sitten ne vain jäävät käyttöliittymän renderöinnistä vastaavana pois testauksesta. Se mitä muita tiedostoja on jätetty testikattavuudesta pois selviää tiedostosta vitest.config.ts
+
+![Testauskattavuus](image.png)
 

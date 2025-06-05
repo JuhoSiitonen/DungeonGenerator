@@ -26,6 +26,8 @@ Sivuston visuaalinen ilme on vielä aivan kesken (toki hieman toissijainen asia,
 
 Kartan koko käyttäjän syötteenä? Kartan skaalaus (tileSize) käyttäjältä? 
 
+MST visualisoinnissa reunojen painot voisi helpottaa MST:n toteamisessa.
+
 ---
 
 ## Saavutetut aika- ja tilavaativuudet
