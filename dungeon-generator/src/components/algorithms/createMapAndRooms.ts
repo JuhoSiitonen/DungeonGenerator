@@ -7,7 +7,7 @@ import type { DungeonMapMatrix } from "../types"
  * Huoneiden luomisessa käytetään satunnaista leveys- ja korkeusarvoa jotka ovat suurempia kuin 2.
  * Huoneiden koordinaatit lasketaan satunnaisesti kartan koordinaattien perusteella ottaen huomioon huoneen leveys ja korkeus.
  * Huoneiden luomisessa tarkistetaan että huone on tyhjä, eli että se ei mene päällekkäin muiden huoneiden kanssa.
- * Huoneiden luomisessa käytetään maxAttempts arvoa, joka on 10 kertaa huoneiden määrä, jotta vältetään loputon silmukka.
+ * Huoneiden luomisessa käytetään maxAttempts arvoa, joka on 100 kertaa huoneiden määrä, jotta vältetään loputon silmukka.
  * Kaksi eri funktiota on käytössä, koska kehitysympäristössä käyttäjä voi syöttää huoneiden koordinaatit 
  * manuaalisesti, mutta tuotantoympäristössä huoneet luodaan satunnaisesti.
  */
@@ -25,7 +25,7 @@ export function createMapAndRooms(
   manualRooms?: RoomSpecifics[]
 ): {roomSpecifics:RoomSpecifics[], map:DungeonMapMatrix, manualRooms?: RoomSpecifics[]} {
   // Käytetään seedrandomia satunnaisten huoneiden luomiseen, jotta saadaan toistettavat tulokset
-  const map: DungeonMapMatrix = createEmptyMap(60, 40)
+  const map: DungeonMapMatrix = createEmptyMap(80, 60)
 
   // Jos manuaaliset huoneet on annettu (ENV === DEV), käytetään niitä
   if (manualRooms && manualRooms.length > 0) {
@@ -45,22 +45,27 @@ function createMapWithRandomRooms(
   const rng = seedrandom(seed)
   let roomCount = 0
   const roomSpecifics: RoomSpecifics[] = []
-  const maxAttempts = numberOfRooms * 10
+  const maxAttempts = numberOfRooms * 100
 
    while (roomCount < numberOfRooms && attempts < maxAttempts) {
     attempts++
 
     // Sattumanvaraiset leveys ja korkeus huoneelle, ja sattumanvaraiset x ja y koordinaatit
+    // Huoneen leveys ja korkeus ovat vähintään 2, jotta huone ei ole liian pieni
+    // Huoneen koordinaatit ovat välillä 1 ja kartan leveys/korkeus -1 
     const minRoomSize = 2
     const width = Math.floor(rng() * (map[0].length / 4)) + minRoomSize
     const height = Math.floor(rng() * (map.length / 4)) + minRoomSize
-    const x = Math.floor(rng() * (map[0].length - (width-1)))  
-    const y = Math.floor(rng() * (map.length - (height-1)))
+    let x = Math.floor(rng() * (map[0].length - (width+1)))
+    let y = Math.floor(rng() * (map.length - (height+1)))
+    
+    x = x === 0 ? 1 : x // Varmistetaan että x ei ole 0
+    y = y === 0 ? 1 : y // Varmistetaan että y ei ole 0
 
-    // Tarkistetaan että huone on tyhjä
+    // Tarkistetaan että huone on tyhjä (ja 1 ruutu ympärillä)
     let isEmpty = true
-    for (let i = y; i < y + height; i++) {
-      for (let j = x; j < x + width; j++) {
+    for (let i = y-1; i < y + height + 1; i++) {
+      for (let j = x-1; j < x + width + 1; j++) {
         if (map[i][j] !== 'empty') {
           isEmpty = false
           break

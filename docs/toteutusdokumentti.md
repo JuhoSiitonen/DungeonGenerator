@@ -20,11 +20,16 @@ Triangulaation testaamiseen tulisi vielä kehittää lisää ja monipuolisempia 
 
 Satunnaisen huoneiden luomisen tulisi huomioida se että huoneiden väliin jäisi tilaa. Nyt uusia huoneita voi generoida heti edellisen kylkeen. 
 
-Huoneiden keskipisteiden visualisointi ei ole oikeasti keskellä huoneita, tämä johtuu siitä että minulla on 60*40 kartta jota skaalataan tileSize arvolla, joka on tällä hetkellä 10. 
+Huoneiden keskipisteiden visualisointi ei ole oikeasti keskellä huoneita, tämä johtuu siitä että minulla on 80*60 kartta jota skaalataan tileSize arvolla, joka on tällä hetkellä 10. 
 
 Sivuston visuaalinen ilme on vielä aivan kesken (toki hieman toissijainen asia, mutta harmittaa minua). Sivusto ei ole internetin kautta saatavilla (myös täysin toissijainen asia, mutta mahdollisesti saan tämän nettiinkin testattavaksi).
 
 Kartan koko käyttäjän syötteenä? Kartan skaalaus (tileSize) käyttäjältä? 
+
+---
+
+## Saavutetut aika- ja tilavaativuudet
+
 
 
 ---

@@ -32,8 +32,8 @@ describe('Dungeon Map Generation', () => {
       result.roomSpecifics.forEach(room => {
         expect(room.xCenter).toBeGreaterThanOrEqual(0)
         expect(room.yCenter).toBeGreaterThanOrEqual(0)
-        expect(room.xCenter).toBeLessThan(60) 
-        expect(room.yCenter).toBeLessThan(40) 
+        expect(room.xCenter).toBeLessThan(80) 
+        expect(room.yCenter).toBeLessThan(60) 
       })
     })
   })
