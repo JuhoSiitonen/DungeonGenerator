@@ -18,8 +18,6 @@ Tällä hetkellä jos jotkin kolme pistettä muodostavat suoran linjan ohjelma n
 
 Triangulaation testaamiseen tulisi vielä kehittää lisää ja monipuolisempia testejä. Olen jo luonut sitä varten manuaalisen testausympäristön, jonka avulla voisin kehittää uusia trianguloitavia pistejoukkoja.
 
-Satunnaisen huoneiden luomisen tulisi huomioida se että huoneiden väliin jäisi tilaa. Nyt uusia huoneita voi generoida heti edellisen kylkeen. 
-
 Huoneiden keskipisteiden visualisointi ei ole oikeasti keskellä huoneita, tämä johtuu siitä että minulla on 80*60 kartta jota skaalataan tileSize arvolla, joka on tällä hetkellä 10. 
 
 Sivuston visuaalinen ilme on vielä aivan kesken (toki hieman toissijainen asia, mutta harmittaa minua). Sivusto ei ole internetin kautta saatavilla (myös täysin toissijainen asia, mutta mahdollisesti saan tämän nettiinkin testattavaksi).
@@ -58,7 +56,7 @@ https://www.redblobgames.com/pathfinding/a-star/introduction.html
 
 ## Tekoälyn käyttö
 
-### Ohjelmiston käytössä tekoälyä on käytetty seuraavasti
+### Ohjelmiston tekemisessä tekoälyä on käytetty seuraavasti
 
 - ChatGPT GPT-4o mallia hyödynnettiin Delaunay triangulaation ymmärtämisessä. Miksi sitä tarvitaan, mitä se tekee, miksi se on hyvä tässä asiassa.
 
