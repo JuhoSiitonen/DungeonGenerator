@@ -1,3 +1,4 @@
+import type { DungeonMapMatrix } from "../types"
 import type { Point, CircumCircle, Edge, Triangle } from "./types"
 
 
@@ -97,4 +98,48 @@ export const getUniquePoints = (triangulation: Triangle[]): Point[] => {
     }
     
     return points;
+};
+
+////////////////// A* algoritmin keskeneräiset jutut
+
+
+// Lasketaan Manhattan-etäisyys kahden pisteen välillä, eli kuinka monta ruutua niiden välillä on vaakasuoraan ja pystysuoraan
+export const manhattanDistance = (a: Point, b: Point): number => {
+  return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
+};
+
+export const isValidPoint = (point: Point, map: DungeonMapMatrix): boolean => {
+  return (
+    point.x >= 0 &&
+    point.x < map[0].length &&
+    point.y >= 0 &&
+    point.y < map.length
+  );
+};
+
+export const isWalkable = (point: Point, map: DungeonMapMatrix): boolean => {
+  if (!isValidPoint(point, map)) return false;
+  const tile = map[point.y][point.x];
+  return tile === 'empty' || tile === 'corridor' || tile === 'room';
+};
+
+
+// Palauttaa neljä naapuripistettä (ylös, alas, vasemmalle, oikealle)
+export const getNeighbors4 = (point: Point): Point[] => {
+  return [
+    { x: point.x, y: point.y - 1 }, // Ylös
+    { x: point.x, y: point.y + 1 }, // Alas
+    { x: point.x - 1, y: point.y }, // Vasemmalla
+    { x: point.x + 1, y: point.y }  // Oikealla
+  ];
+};
+
+// Palauttaa diagonaaliset naapurit (ylävasen, yläoikea, alavasen, alaoikea)
+export const getDiagonalNeighbors = (point: Point): Point[] => {
+  return [
+    { x: point.x - 1, y: point.y - 1 }, // Ylävasen
+    { x: point.x + 1, y: point.y - 1 }, // Yläoikea
+    { x: point.x - 1, y: point.y + 1 }, // Alavasen
+    { x: point.x + 1, y: point.y + 1 }  // Alaoikea
+  ];
 };
