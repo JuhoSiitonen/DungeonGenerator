@@ -143,3 +143,13 @@ export const getDiagonalNeighbors = (point: Point): Point[] => {
     { x: point.x + 1, y: point.y + 1 }  // Alaoikea
   ];
 };
+
+export const getMovementCost = (from: Point, to: Point): number => {
+  const dx = Math.abs(to.x - from.x);
+  const dy = Math.abs(to.y - from.y);
+  
+  if (dx === 1 && dy === 1) {
+    return 1.4; // Diagonaalisen liikkumisen "kustannus" (Pythagoraan lauseesta)
+  }
+  return 1; // Suoran liikkumisen "kustannus"
+};
