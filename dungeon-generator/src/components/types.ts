@@ -1,3 +1,4 @@
+import type { Point, Triangle } from "./algorithms/types"
 
 export type Tile = 'empty' | 'room' | 'corridor'
 
@@ -23,6 +24,8 @@ export type DungeonMapProps = {
   tileSize?: number
   roomSpecifics: RoomSpecifics[]
   visualOptions: VisualOptions
+  triangulation: Triangle[]
+  mstEdges: Array<{ start: Point, end: Point }>
 }
 
 export interface RoomSpecifics {
@@ -30,4 +33,17 @@ export interface RoomSpecifics {
   height: number,
   xCenter: number,
   yCenter: number
+}
+
+export interface AStarNode {
+  point: Point;
+  gCost: number;  
+  hCost: number;  
+  fCost: number;
+  parent: AStarNode | null;
+}
+
+export interface PathfindingResult {
+  path: Point[];
+  found: boolean;
 }

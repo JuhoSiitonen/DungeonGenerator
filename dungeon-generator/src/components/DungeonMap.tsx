@@ -1,11 +1,7 @@
 import { useEffect, useRef, type JSX } from 'react'
-import { delaunayTriangulation } from './algorithms/delaunayTriangulation'
 import type { DungeonMapProps } from './types'
-import { getMSTLines, primsAlgorithm } from './algorithms/minimumSpanningTree'
-import type { Point } from './algorithms/types'
 
-
-export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOptions }: DungeonMapProps): JSX.Element => {
+export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOptions, triangulation, mstEdges }: DungeonMapProps): JSX.Element => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   
   useEffect(() => {
@@ -35,20 +31,11 @@ export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOption
         })
       })
     
-
-    if (roomSpecifics.length > 3) {
-      const triangles = delaunayTriangulation(roomSpecifics)
-      let mstEdges: Array<{start: Point, end: Point}> = []
-      if (triangles.length) {
-        const mst = primsAlgorithm(triangles)
-        mstEdges = getMSTLines(mst)
-      }
-      
       // 2. Piirrä kolmioiden reunat
       if (visualOptions.showTriangles) {
         ctx.strokeStyle = '#FFD700' // Kulta
         ctx.lineWidth = 3
-        triangles.forEach((triangle, index) => {
+        triangulation.forEach((triangle, index) => {
           ctx.beginPath()
           ctx.moveTo(triangle.coordinates[0].x * tileSize, triangle.coordinates[0].y * tileSize)
           ctx.lineTo(triangle.coordinates[1].x * tileSize, triangle.coordinates[1].y * tileSize)
@@ -72,7 +59,7 @@ export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOption
       if (visualOptions.showMST && mstEdges.length > 0) {
         ctx.strokeStyle = '#FF6B35' 
         ctx.lineWidth = 4
-        ctx.setLineDash([5, 5]) // Katkoviiva
+        ctx.setLineDash([5, 5]) 
         
         mstEdges.forEach((edge) => {
           ctx.beginPath()
@@ -88,7 +75,7 @@ export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOption
       if (visualOptions.showCircumcircles) {
         ctx.strokeStyle = '#FF4444' // Punainen
         ctx.lineWidth = 2
-        triangles.forEach((triangle) => {
+        triangulation.forEach((triangle) => {
           const circle = triangle.circumcircle
           ctx.beginPath()
           ctx.arc(
@@ -109,7 +96,7 @@ export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOption
         })
       }
       
-    }
+    
     
     // 4. Piirrä huoneiden keskipisteet ja numerot
     if (visualOptions.showRoomCenters) {
@@ -133,7 +120,7 @@ export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOption
       })
     }
     
-  }, [dungeon, roomSpecifics, tileSize, visualOptions])
+  }, [dungeon, mstEdges, roomSpecifics, tileSize, triangulation, visualOptions])
 
   return (
     <canvas
