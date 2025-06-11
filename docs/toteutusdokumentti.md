@@ -52,6 +52,8 @@ https://en.wikipedia.org/wiki/A*_search_algorithm
 
 https://www.redblobgames.com/pathfinding/a-star/introduction.html
 
+https://en.wikipedia.org/wiki/Taxicab_geometry
+
 ---
 
 ## Tekoälyn käyttö
