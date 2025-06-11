@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { DungeonMap }  from "./components/DungeonMap.tsx"
-import { createMapAndRooms } from "./components/algorithms/createMapAndRooms.ts"
 import { VisualizationControls } from "./components/VisualizationControls.tsx"
 import type { DungeonMapMatrix, RoomSpecifics } from "./components/types.ts"
+import type { Triangle } from "./components/algorithms/types.ts"
+import { generateDungeon } from "./components/algorithms/generateDungeon.ts"
+import type { Point } from "./components/algorithms/types.ts"
 
 const ENV = import.meta.env.MODE || 'production'
 const isDevOrPreProd = ENV === 'development' 
@@ -11,6 +13,8 @@ function App() {
   const [map, setMap] = useState<DungeonMapMatrix>([])
   const [roomCount, setRoomCount] = useState(0)
   const [roomSpecifics, setRoomSpecifics] = useState<RoomSpecifics[]>([])
+  const [triangulation, setTriangulation] = useState<Triangle[]>([])
+  const [mstEdges, setMSTEdges] = useState<Array<{start: Point, end: Point}>>([])
   const [visualOptions, setVisualOptions] = useState({
     showTriangles: true,
     showCircumcircles: true,
@@ -26,12 +30,16 @@ function App() {
     e.preventDefault()
 
     if (isDevOrPreProd && useManualInput) {
-      const { roomSpecifics: manualCorrectedSpecifics, map } = createMapAndRooms(manualRoomInputs.length, "1234", manualRoomInputs)
+      const { roomSpecifics, map, triangulation, mstEdges } = generateDungeon(roomCount, "1234", 'astar', true, manualRoomInputs)
       setMap(map)
-      setRoomSpecifics(manualCorrectedSpecifics)
+      setTriangulation(triangulation)
+      setMSTEdges(mstEdges)
+      setRoomSpecifics(roomSpecifics)
     } else {
-      const { roomSpecifics, map } = createMapAndRooms(roomCount, "1234")
+      const { roomSpecifics, map, triangulation, mstEdges } = generateDungeon(roomCount, "1234", 'astar', false)
       setMap(map)
+      setTriangulation(triangulation)
+      setMSTEdges(mstEdges)
       setRoomSpecifics(roomSpecifics)
     }
   }
@@ -154,7 +162,14 @@ function App() {
       </form>    
       <VisualizationControls options={visualOptions} onChange={handleVisualOptionChange} />
       {map.length > 0 &&
-      <DungeonMap dungeon={map} tileSize={12} roomSpecifics={roomSpecifics} visualOptions={visualOptions}/>
+      <DungeonMap 
+        dungeon={map} 
+        tileSize={12} 
+        roomSpecifics={roomSpecifics} 
+        visualOptions={visualOptions}
+        triangulation={triangulation}
+        mstEdges={mstEdges}
+      />
      }
     </div>
   )
