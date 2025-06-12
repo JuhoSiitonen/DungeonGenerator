@@ -26,6 +26,8 @@ Kartan koko käyttäjän syötteenä? Kartan skaalaus (tileSize) käyttäjältä
 
 MST visualisoinnissa reunojen painot voisi helpottaa MST:n toteamisessa.
 
+Yleisesti ohjelma käyttää paljon apufunktioita toiminnassaan ja se itsessään syö resursseja. Monet apufunktioista voisi toteuttaa suoraan algoritmien yhteyteen, mutta mielestäni koodin luettavuus kärsisi ja varsinkin kun en ole vielä ajautunut suorituksen suhteen pullonkaulaan en ole aikeissa muuttaa tätä lähestymistapaa. 
+
 ---
 
 ## Saavutetut aika- ja tilavaativuudet

@@ -10,6 +10,7 @@ Ohjelma on edistynyt ihan mukavasti, tällä viikolla minulla ei ollut hirvittä
 
 3. Mitä opin tällä viikolla / tänään?
 Opin mikä on A* algoritmin ja perus Dijkstran ero ja sehän piileskelee heuristiikoiden käytössä. A* algoritmi oli ehkä hankalin toteuttaa tähän projektiin, sillä triangulaation suhteen ohjelmani oli hyvin samanlainen tietorakenteiltaan ja oikeastaan koko ohjelmani rakennettiin sen ympärille. A* algoritmin tekemiseksi minun piti hieman enemmän tehdä yritystä, erehdystä ja muokkauksia. 
+Myös vertaisarvioitava projekti Miinaharavan tekoälystä oli hyvin opettavainen. Hyvin erilainen kuin oma projektini jossa implementoitavat algoritmit ovat hyvin selkeitä mielestäni. Miinaharavan CSP on eteerisempi kokonaisuus, mutta tekijä oli sen hyvin hoitanut. 
 
 
 4. Mikä jäi epäselväksi tai tuottanut vaikeuksia?

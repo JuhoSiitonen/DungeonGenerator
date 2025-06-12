@@ -1,4 +1,4 @@
-import type { Point, Triangle } from "./algorithms/types"
+import type { MST, Point, Triangle } from "./algorithms/types"
 
 export type Tile = 'empty' | 'room' | 'corridor'
 
@@ -26,6 +26,7 @@ export type DungeonMapProps = {
   roomSpecifics: RoomSpecifics[]
   visualOptions: VisualOptions
   triangulation: Triangle[]
+  mst: MST
   mstEdges: Array<{ start: Point, end: Point }>
 }
 
