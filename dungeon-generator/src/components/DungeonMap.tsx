@@ -1,7 +1,7 @@
 import { useEffect, useRef, type JSX } from 'react'
 import type { DungeonMapProps } from './types'
 
-export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOptions, triangulation, mstEdges }: DungeonMapProps): JSX.Element => {
+export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOptions, triangulation, mst, mstEdges }: DungeonMapProps): JSX.Element => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   
@@ -56,21 +56,37 @@ export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOption
         })
       }
 
-       // 2.5. Piirrä MST reunat
-      if (visualOptions.showMST && mstEdges.length > 0) {
-        ctx.strokeStyle = '#FF6B35' 
-        ctx.lineWidth = 4
-        ctx.setLineDash([5, 5]) 
-        
-        mstEdges.forEach((edge) => {
-          ctx.beginPath()
-          ctx.moveTo(edge.start.x * tileSize, edge.start.y * tileSize)
-          ctx.lineTo(edge.end.x * tileSize, edge.end.y * tileSize)
-          ctx.stroke()
-        })
-        
-        ctx.setLineDash([])
+      // 2.5. Piirrä MST reunat ja painot
+  if (visualOptions.showMST && mst.edges.length > 0) {
+    ctx.strokeStyle = '#FF6B35' 
+    ctx.lineWidth = 4
+    ctx.setLineDash([5, 5]) 
+  
+    mst.edges.forEach((edge) => {
+      ctx.beginPath()
+      ctx.moveTo(edge.a.x * tileSize, edge.a.y * tileSize)
+      ctx.lineTo(edge.b.x * tileSize, edge.b.y * tileSize)
+      ctx.stroke()
+    
+      if (visualOptions.showMSTWeights) { 
+        const midX = (edge.a.x + edge.b.x) / 2 * tileSize
+        const midY = (edge.a.y + edge.b.y) / 2 * tileSize
+      
+        // Tausta tekstille paremman luettavuuden vuoksi
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'
+        ctx.beginPath()
+        ctx.arc(midX, midY, 12, 0, 2 * Math.PI)
+        ctx.fill()
+      
+        ctx.fillStyle = '#333'
+        ctx.font = 'bold 10px Arial'
+        ctx.textAlign = 'center'
+        ctx.fillText(edge.weight.toFixed(1), midX, midY + 3)
       }
+    })
+  
+    ctx.setLineDash([])
+  }
       
       // 3. Piirrä ympyränkehät
       if (visualOptions.showCircumcircles) {
