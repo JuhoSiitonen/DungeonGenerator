@@ -1,13 +1,8 @@
+import type { VisualOptions } from "./types"
 
 
 export const VisualizationControls = ({ options, onChange }: {
-  options: {
-    showTriangles: boolean  
-    showCircumcircles: boolean
-    showRoomCenters: boolean
-    showRoomNumbers: boolean
-    showMST: boolean
-  }
+  options: VisualOptions
   onChange: (key: string, value: boolean) => void
 }) => (
   <div>
@@ -26,6 +21,7 @@ export const VisualizationControls = ({ options, onChange }: {
             {key === 'showRoomCenters' && 'Näytä keskipisteet'}
             {key === 'showRoomNumbers' && 'Näytä numerot'}
             {key === 'showMST' && 'Näytä MST'}
+            {key === 'showMSTWeights' && ' Näytä MST painot'}
           </span>
         </label>
       ))}

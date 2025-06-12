@@ -17,6 +17,7 @@ export interface VisualOptions {
   showRoomCenters: boolean
   showRoomNumbers: boolean
   showMST: boolean
+  showMSTWeights: boolean
 }
 
 export type DungeonMapProps = {

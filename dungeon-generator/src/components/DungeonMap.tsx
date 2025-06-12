@@ -3,6 +3,7 @@ import type { DungeonMapProps } from './types'
 
 export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOptions, triangulation, mstEdges }: DungeonMapProps): JSX.Element => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+
   
   useEffect(() => {
     const canvas = canvasRef.current
