@@ -5,9 +5,6 @@ import type { DungeonMapMatrix, RoomSpecifics } from "./components/types.ts"
 import type { MST, Triangle } from "./components/algorithms/types.ts"
 import { generateDungeon } from "./components/algorithms/generateDungeon.ts"
 
-const ENV = import.meta.env.MODE || 'production'
-const isDevOrPreProd = ENV === 'development' 
-
 function App() {
   const [map, setMap] = useState<DungeonMapMatrix>([])
   const [roomCount, setRoomCount] = useState(0)
@@ -28,7 +25,7 @@ function App() {
   const generateRooms = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
-    if (isDevOrPreProd && useManualInput) {
+    if (useManualInput) {
       const { roomSpecifics, map, triangulation, mst } = generateDungeon(roomCount, "1234", 'astar', true, manualRoomInputs)
       setMap(map)
       setTriangulation(triangulation)
@@ -68,7 +65,6 @@ function App() {
     <div>
       <h1>2D Luolaston generointi</h1>
         <form onSubmit={generateRooms}>
-        {isDevOrPreProd && (
           <div style={{ marginBottom: '16px' }}>
             <label>
               <input 
@@ -79,9 +75,7 @@ function App() {
               Syötä huoneet manuaalisesti
             </label>
           </div>
-        )}
-
-        {isDevOrPreProd && useManualInput ? (
+        {useManualInput ? (
           <div style={{ marginBottom: '16px' }}>
             <h3>Manuaalinen huoneiden lisäys</h3>
             {manualRoomInputs.map((room, index) => (
