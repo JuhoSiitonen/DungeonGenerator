@@ -11,7 +11,8 @@ export const generateDungeon = (
   numberOfRooms: number, 
   seed: string, 
   _corridorType: 'astar', 
-  allowDiagonalCorridors: boolean, 
+  allowDiagonalCorridors: boolean,
+  directRouting: boolean,
   manualRooms?: RoomSpecifics[]
 ): { 
   roomSpecifics: RoomSpecifics[]; 
@@ -24,7 +25,7 @@ export const generateDungeon = (
   const triangles = delaunayTriangulation(roomSpecifics)
   const mst = primsAlgorithm(triangles)
   const mstEdges: Array<{start: Point, end: Point}> = getMSTLines(mst)
-  const mapWithRoomsAndCorridors = createCorridorsFromMST(map, mstEdges, allowDiagonalCorridors)
+  const mapWithRoomsAndCorridors = createCorridorsFromMST(map, mstEdges, allowDiagonalCorridors, directRouting);
   
   return { roomSpecifics, map: mapWithRoomsAndCorridors, triangulation: triangles, mst };
 }

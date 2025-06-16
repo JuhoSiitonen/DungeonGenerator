@@ -64,7 +64,7 @@ export const findPath = (
   goal: Point,
   map: DungeonMapMatrix,
   allowDiagonal: boolean = false, // EI käytetä, koska ei ole vielä valmis
-  heuristic: 'manhattan' | 'direct' = 'manhattan' // Valinnainen heuristiikka, oletuksena Manhattan-etäisyys
+  heuristic: 'manhattan' | 'direct' = 'direct' // Valinnainen heuristiikka, oletuksena Manhattan-etäisyys
 ): PathfindingResult => {
   if (!isValidPoint(start, map) || !isValidPoint(goal, map)) {
     return { path: [], found: false };
@@ -166,12 +166,13 @@ export const findPath = (
 export const createCorridorsFromMST = (
   map: DungeonMapMatrix,
   mstEdges: Array<{start: Point, end: Point}>,
-  allowDiagonal: boolean = false
+  allowDiagonal: boolean,
+  directRouting: boolean
 ): DungeonMapMatrix => {
   const newMap = map.map(row => [...row]);
 
   for (const edge of mstEdges) {
-    const pathResult = findPath(edge.start, edge.end, newMap, allowDiagonal);
+    const pathResult = findPath(edge.start, edge.end, newMap, allowDiagonal, directRouting ? 'manhattan': 'direct');
     
     if (pathResult.found) {
       for (const point of pathResult.path) {

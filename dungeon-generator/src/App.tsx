@@ -10,7 +10,9 @@ function App() {
   const [roomCount, setRoomCount] = useState(0)
   const [roomSpecifics, setRoomSpecifics] = useState<RoomSpecifics[]>([])
   const [triangulation, setTriangulation] = useState<Triangle[]>([])
-  const [mst, setMST] = useState<MST>({} as MST) 
+  const [mst, setMST] = useState<MST>({} as MST)
+  const [allowDiagonal, setAllowDiagonal] = useState<boolean>(false)
+  const [directRouting, setDirectRouting] = useState<boolean>(false)
   const [visualOptions, setVisualOptions] = useState({
     showTriangles: true,
     showCircumcircles: true,
@@ -26,13 +28,13 @@ function App() {
     e.preventDefault()
 
     if (useManualInput) {
-      const { roomSpecifics, map, triangulation, mst } = generateDungeon(roomCount, "1234", 'astar', true, manualRoomInputs)
+      const { roomSpecifics, map, triangulation, mst } = generateDungeon(roomCount, "1234", 'astar', allowDiagonal, directRouting, manualRoomInputs)
       setMap(map)
       setTriangulation(triangulation)
       setMST(mst)
       setRoomSpecifics(roomSpecifics)
     } else {
-      const { roomSpecifics, map, triangulation, mst } = generateDungeon(roomCount, "1234", 'astar', false)
+      const { roomSpecifics, map, triangulation, mst } = generateDungeon(roomCount, "1234", 'astar', allowDiagonal, directRouting)
       setMap(map)
       setTriangulation(triangulation)
       setMST(mst)
@@ -40,7 +42,7 @@ function App() {
     }
   }
 
-  const handleVisualOptionChange = (key: string, value: boolean) => {
+  const handleVisualOptionChange = (key: string, value: boolean): void => {
     setVisualOptions(prev => ({ ...prev, [key]: value }))
   }
 
@@ -48,11 +50,11 @@ function App() {
     setManualRoomInputs(prev => [...prev, { width: 4, height: 4, xCenter: 10, yCenter: 15 }])
   }
 
-  const removeManualRoom = (index: number) => {
+  const removeManualRoom = (index: number): void => {
     setManualRoomInputs(prev => prev.filter((_, i) => i !== index))
   }
 
-  const updateManualRoom = (index: number, field: keyof RoomSpecifics, value: number) => {
+  const updateManualRoom = (index: number, field: keyof RoomSpecifics, value: number): void => {
     setManualRoomInputs(prev => 
       prev.map((room, i) => 
         i === index ? { ...room, [field]: value } : room
@@ -152,7 +154,25 @@ function App() {
         )}
         
         <button type="submit">Luo</button>
-      </form>    
+      </form>
+      <div style={{ marginBottom: '16px', marginTop: '16px', display: 'flex', flexDirection: 'row', gap: '8px' }}>
+        <label>
+          <input 
+            type="checkbox" 
+            checked={allowDiagonal} 
+            onChange={() => setAllowDiagonal(prev => !prev)}
+          />
+          Reititys sallittu diagonaalisesti
+        </label>
+        <label>
+          <input 
+            type="checkbox" 
+            checked={directRouting} 
+            onChange={() => setDirectRouting(prev => !prev)}
+          />
+          Suorat reitit
+        </label>
+      </div>
       <VisualizationControls options={visualOptions} onChange={handleVisualOptionChange} />
       {map.length > 0 &&
       <DungeonMap 

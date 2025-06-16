@@ -137,6 +137,10 @@ export const getNeighbors4 = (point: Point): Point[] => {
 // Palauttaa diagonaaliset naapurit (ylävasen, yläoikea, alavasen, alaoikea)
 export const getDiagonalNeighbors = (point: Point): Point[] => {
   return [
+    { x: point.x, y: point.y - 1 }, // Ylös
+    { x: point.x, y: point.y + 1 }, // Alas
+    { x: point.x - 1, y: point.y }, // Vasemmalla
+    { x: point.x + 1, y: point.y },  // Oikealla
     { x: point.x - 1, y: point.y - 1 }, // Ylävasen
     { x: point.x + 1, y: point.y - 1 }, // Yläoikea
     { x: point.x - 1, y: point.y + 1 }, // Alavasen
@@ -144,6 +148,7 @@ export const getDiagonalNeighbors = (point: Point): Point[] => {
   ];
 };
 
+// Lasketaan liikkumisen "kustannus" kahden vierekkäisen pisteen välillä
 export const getMovementCost = (from: Point, to: Point): number => {
   const dx = Math.abs(to.x - from.x);
   const dy = Math.abs(to.y - from.y);
