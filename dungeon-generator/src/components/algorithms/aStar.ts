@@ -63,8 +63,8 @@ export const findPath = (
   start: Point,
   goal: Point,
   map: DungeonMapMatrix,
-  allowDiagonal: boolean = false, // EI käytetä, koska ei ole vielä valmis
-  heuristic: 'manhattan' | 'direct' = 'direct' // Valinnainen heuristiikka, oletuksena Manhattan-etäisyys
+  allowDiagonal: boolean,
+  heuristic: 'manhattan' | 'direct' // Valinnainen heuristiikka, Manhattan tuottaa suoraviivaisempia polkuja
 ): PathfindingResult => {
   if (!isValidPoint(start, map) || !isValidPoint(goal, map)) {
     return { path: [], found: false };

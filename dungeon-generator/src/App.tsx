@@ -1,9 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { DungeonMap }  from "./components/DungeonMap.tsx"
 import { VisualizationControls } from "./components/VisualizationControls.tsx"
 import type { DungeonMapMatrix, RoomSpecifics } from "./components/types.ts"
 import type { MST, Triangle } from "./components/algorithms/types.ts"
 import { generateDungeon } from "./components/algorithms/generateDungeon.ts"
+
+const stageDelay = 3000 // Millisekunteina, kuinka kauan jokainen vaihe kestää
 
 function App() {
   const [map, setMap] = useState<DungeonMapMatrix>([])
@@ -13,16 +15,24 @@ function App() {
   const [mst, setMST] = useState<MST>({} as MST)
   const [allowDiagonal, setAllowDiagonal] = useState<boolean>(false)
   const [directRouting, setDirectRouting] = useState<boolean>(false)
+  const [disableAnimation, setDisableAnimation] = useState<boolean>(false)
   const [visualOptions, setVisualOptions] = useState({
-    showTriangles: true,
-    showCircumcircles: true,
-    showRoomNumbers: true,
-    showMST: true,
-    showMSTWeights: true
+    showCircumcircles: false,
+    showTriangles: false,
+    showRoomNumbers: false,
+    showMST: false,
+    showMSTWeights: false,
+    showCorridors: false,
   })
 
   const [manualRoomInputs, setManualRoomInputs] = useState<RoomSpecifics[]>([])
   const [useManualInput, setUseManualInput] = useState(false)
+
+  useEffect(() => {
+    if (map.length > 0 && !disableAnimation) {
+      startStagedGeneration()
+    }
+  }, [map])
   
   const generateRooms = (e: React.SyntheticEvent) => {
     e.preventDefault()
@@ -60,6 +70,64 @@ function App() {
         i === index ? { ...room, [field]: value } : room
       )
     )
+  }
+
+  const startStagedGeneration = async () => {
+    // Vaihe 1 : ainoastaan huoneet ja niiden numerot
+    setVisualOptions(prev => ({
+      ...prev,
+      showRoomNumbers: true,
+      showTriangles: false,
+      showMST: false,
+      showCorridors: false,
+      showCircumcircles: false,
+      showMSTWeights: false
+    }))
+    
+    await delay(stageDelay)
+    
+    // Vaihe 2: Näytä triangulaatio ja ympyränkehät
+    setVisualOptions(prev => ({
+      ...prev,
+      showTriangles: true,
+      showCircumcircles: true
+    }))
+    
+    await delay(stageDelay)
+    
+    // Vaihe 3: Näytä virittävänpuun reunat ja painot
+    setVisualOptions(prev => ({
+      ...prev,
+      showMST: true,
+      showMSTWeights: true,
+      showCircumcircles: false
+    }))
+    
+    await delay(stageDelay)
+    
+    // Vaihe 4: Näytä käytävät
+    setVisualOptions(prev => ({
+      ...prev,
+      showCorridors: true,
+      showTriangles: false, 
+      showMSTWeights: false
+    }))
+    
+    await delay(stageDelay)
+    
+    setVisualOptions(prev => ({
+      ...prev,
+      showRoomNumbers: false,
+      showTriangles: false,
+      showCircumcircles: false,
+      showMST: false,
+      showMSTWeights: false,
+      showCorridors: true
+    }))
+  }
+
+  const delay = (ms: number): Promise<void> => {
+    return new Promise(resolve => setTimeout(resolve, ms))
   }
 
 
@@ -171,6 +239,14 @@ function App() {
             onChange={() => setDirectRouting(prev => !prev)}
           />
           Suorat reitit
+        </label>
+        <label>
+          <input 
+            type="checkbox" 
+            checked={disableAnimation} 
+            onChange={() => setDisableAnimation(prev => !prev)}
+          />
+          Poista animaatio käytöstä
         </label>
       </div>
       <VisualizationControls options={visualOptions} onChange={handleVisualOptionChange} />

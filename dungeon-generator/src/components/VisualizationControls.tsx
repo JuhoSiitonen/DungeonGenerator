@@ -21,6 +21,7 @@ export const VisualizationControls = ({ options, onChange }: {
             {key === 'showRoomNumbers' && 'Näytä numerot'}
             {key === 'showMST' && 'Näytä MST'}
             {key === 'showMSTWeights' && ' Näytä MST painot'}
+            {key === 'showCorridors' && 'Näytä käytävät'}
           </span>
         </label>
       ))}

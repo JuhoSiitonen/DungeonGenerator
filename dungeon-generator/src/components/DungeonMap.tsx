@@ -26,7 +26,12 @@ export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOption
             ctx.fillStyle = '#4caf50'
             break
           case 'corridor':
-            ctx.fillStyle = '#2196f3'
+            if (visualOptions.showCorridors) {
+              ctx.fillStyle = '#2196f3' 
+            }
+            else {
+              ctx.fillStyle = '#111'
+            }
             break
         }
         ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize)
