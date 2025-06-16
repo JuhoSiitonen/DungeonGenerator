@@ -18,7 +18,6 @@ export const VisualizationControls = ({ options, onChange }: {
           <span>
             {key === 'showTriangles' && 'Näytä kolmiot'}
             {key === 'showCircumcircles' && 'Näytä ympyränkehät'}
-            {key === 'showRoomCenters' && 'Näytä keskipisteet'}
             {key === 'showRoomNumbers' && 'Näytä numerot'}
             {key === 'showMST' && 'Näytä MST'}
             {key === 'showMSTWeights' && ' Näytä MST painot'}

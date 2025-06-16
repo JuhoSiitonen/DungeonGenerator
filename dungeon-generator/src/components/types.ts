@@ -14,7 +14,6 @@ export interface RoomSpecifics {
 export interface VisualOptions {
   showTriangles: boolean
   showCircumcircles: boolean
-  showRoomCenters: boolean
   showRoomNumbers: boolean
   showMST: boolean
   showMSTWeights: boolean

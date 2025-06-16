@@ -19,7 +19,6 @@ function App() {
   const [visualOptions, setVisualOptions] = useState({
     showTriangles: true,
     showCircumcircles: true,
-    showRoomCenters: true,
     showRoomNumbers: true,
     showMST: true,
     showMSTWeights: true
