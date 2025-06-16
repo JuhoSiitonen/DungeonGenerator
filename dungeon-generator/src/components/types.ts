@@ -26,7 +26,6 @@ export type DungeonMapProps = {
   visualOptions: VisualOptions
   triangulation: Triangle[]
   mst: MST
-  mstEdges: Array<{ start: Point, end: Point }>
 }
 
 export interface RoomSpecifics {

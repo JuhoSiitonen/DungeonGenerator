@@ -2,7 +2,7 @@ import { useEffect, useRef, type JSX } from 'react'
 import type { DungeonMapProps } from './types'
 import { calculateDistance } from './algorithms/helpers'
 
-export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOptions, triangulation, mst, mstEdges }: DungeonMapProps): JSX.Element => {
+export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOptions, triangulation, mst }: DungeonMapProps): JSX.Element => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   
@@ -166,7 +166,7 @@ export const DungeonMap = ({ dungeon, tileSize = 10, roomSpecifics, visualOption
       })
     }
     
-}, [dungeon, mstEdges, roomSpecifics, tileSize, triangulation, visualOptions])
+}, [dungeon, roomSpecifics, tileSize, triangulation, visualOptions, mst])
 
   return (
     <canvas

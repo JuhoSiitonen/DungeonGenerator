@@ -18,7 +18,7 @@ export const generateDungeon = (
   map: DungeonMapMatrix; 
   triangulation: Triangle[]; 
   mst: MST,
-  mstEdges: Array<{start: Point, end: Point}>} => {
+  } => {
 
   const { roomSpecifics, map } = manualRooms ? createMapAndRooms(manualRooms.length, seed, manualRooms) : createMapAndRooms(numberOfRooms, seed);
   const triangles = delaunayTriangulation(roomSpecifics)
@@ -26,5 +26,5 @@ export const generateDungeon = (
   const mstEdges: Array<{start: Point, end: Point}> = getMSTLines(mst)
   const mapWithRoomsAndCorridors = createCorridorsFromMST(map, mstEdges, allowDiagonalCorridors)
   
-  return { roomSpecifics, map: mapWithRoomsAndCorridors, triangulation: triangles, mst, mstEdges };
+  return { roomSpecifics, map: mapWithRoomsAndCorridors, triangulation: triangles, mst };
 }

@@ -4,7 +4,6 @@ import { VisualizationControls } from "./components/VisualizationControls.tsx"
 import type { DungeonMapMatrix, RoomSpecifics } from "./components/types.ts"
 import type { MST, Triangle } from "./components/algorithms/types.ts"
 import { generateDungeon } from "./components/algorithms/generateDungeon.ts"
-import type { Point } from "./components/algorithms/types.ts"
 
 const ENV = import.meta.env.MODE || 'production'
 const isDevOrPreProd = ENV === 'development' 
@@ -15,7 +14,6 @@ function App() {
   const [roomSpecifics, setRoomSpecifics] = useState<RoomSpecifics[]>([])
   const [triangulation, setTriangulation] = useState<Triangle[]>([])
   const [mst, setMST] = useState<MST>({} as MST) 
-  const [mstEdges, setMSTEdges] = useState<Array<{start: Point, end: Point}>>([])
   const [visualOptions, setVisualOptions] = useState({
     showTriangles: true,
     showCircumcircles: true,
@@ -31,18 +29,16 @@ function App() {
     e.preventDefault()
 
     if (isDevOrPreProd && useManualInput) {
-      const { roomSpecifics, map, triangulation, mst, mstEdges } = generateDungeon(roomCount, "1234", 'astar', true, manualRoomInputs)
+      const { roomSpecifics, map, triangulation, mst } = generateDungeon(roomCount, "1234", 'astar', true, manualRoomInputs)
       setMap(map)
       setTriangulation(triangulation)
       setMST(mst)
-      setMSTEdges(mstEdges)
       setRoomSpecifics(roomSpecifics)
     } else {
-      const { roomSpecifics, map, triangulation, mst, mstEdges } = generateDungeon(roomCount, "1234", 'astar', false)
+      const { roomSpecifics, map, triangulation, mst } = generateDungeon(roomCount, "1234", 'astar', false)
       setMap(map)
       setTriangulation(triangulation)
       setMST(mst)
-      setMSTEdges(mstEdges)
       setRoomSpecifics(roomSpecifics)
     }
   }
@@ -172,7 +168,6 @@ function App() {
         visualOptions={visualOptions}
         triangulation={triangulation}
         mst={mst}
-        mstEdges={mstEdges}
       />
      }
     </div>

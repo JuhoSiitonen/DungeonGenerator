@@ -16,8 +16,8 @@ export const VisualizationControls = ({ options, onChange }: {
             onChange={(e) => onChange(key, e.target.checked)}
           />
           <span>
-            {key === 'showTriangles' && 'Näytä kolmiot'}
             {key === 'showCircumcircles' && 'Näytä ympyränkehät'}
+            {key === 'showTriangles' && 'Näytä kolmiot'}
             {key === 'showRoomNumbers' && 'Näytä numerot'}
             {key === 'showMST' && 'Näytä MST'}
             {key === 'showMSTWeights' && ' Näytä MST painot'}
