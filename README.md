@@ -1,5 +1,7 @@
 # DungeonGenerator
 
+[![Testing pipeline](https://github.com/JuhoSiitonen/DungeonGenerator/actions/workflows/run_tests.yml/badge.svg)](https://github.com/JuhoSiitonen/DungeonGenerator/actions/workflows/run_tests.yml)
+
 Tiralabra kurssin repositorio.
 
 - [Määrittelydokumentti](https://github.com/JuhoSiitonen/DungeonGenerator/blob/main/docs/m%C3%A4%C3%A4rittelydokumentti.md)

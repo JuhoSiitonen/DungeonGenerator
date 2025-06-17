@@ -8,9 +8,6 @@ Seuraavaksi kloonaa repositorio koneellesi, navigoi dungeon-generator kansioon j
 
 **npm run dev**
 
-Edellinen komento käynnistää ohjelmiston kehitysversion, "tuotantoversion" voi käynnistää komennolla:
-
-**npm run prod**
 
 Jonka jälkeen voit testata ohjelmaa selaimessa (todennäköisesti http://localhost:5173/ mutta saat terminaaliisi linkin varsinaiseen porttiin kun käynnistät ohjelman).
 

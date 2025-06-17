@@ -12,6 +12,8 @@ Käyttöliittymän testaus, ei ole vielä mukana suunnitelmissa, mutta Playwrigh
 
 Käyttöliittymän React komponentit on eristetty pois testauskattavuuden laskelmista.
 
+Viimeisimpänä lisäyksenä testauksessa hyödynnetään Github actions toimintoja ja yksikkötestit ajetaan jokaisen pushauksen yhteydessä. 
+
 ### Delaunay triangulaation testaus
 Triangulaation testauksessa hyödynsin tunnettua kaavaa triangulaatiossa syntyvien kolmioiden määrän laskemiselle
 
@@ -41,7 +43,15 @@ Asyklisyys todetaan testeissä pisteiden ja kaarien perusteella.
 
 ## A* testaus
 
-Ei ole vielä toteutettu.. Tulossa!
+A* algoritmin testauksessa käytetään itse kehitettyjä karttoja, joissa hyödynnetään Tile tyypin 'wall' tiilejä, joiden läpi algoritmi ei voi reitittää. Varsinaisessa ohjelmassa ei vielä mitenkään hyödynnetä 'wall' tiilejä vaan ne ovat vain testausta varten. 
+
+Ensin on perus yksikkötestejä kuten varmistus että algoritmi löytää reitin yksinkertaisessa tapauksessa suoraan ja diagonaalisesti. Sitten varmistetaan että algoritmi ei yritä reitittää kartan ulkopuolelle. Pystyy löytämään reitin takaisin aloituspisteeseen. Palauttaa tyhjän reitin jos ei ole löydettävissä reittiä maaliin. Pystyy löytämään reitin maaliin jos sinne pääsee ainoastaan diagonaalisesti ja ei löydä reittiä maaliin jos diagonaalinen reititys on estetty käyttäjän asetuksena. 
+
+Algoritmin oletetaan löytävän lyhin reitti yksinkertaisessa tapauksessa ja sitä testataan. Algoritmin tulee myös pystyä reitittämään esteiden ohitse ja se testataan. 
+
+Tuotetun reitin jatkuvuus testataan, eli tarkistetaan että reitissä on joka pisteen välillä mahdollinen siirtyä joko diagonaalisesti tai ortogonaalisesti ja ettei sama piste toistu reitissä peräkkäin. Kaikki reitin pisteet myös tarkistetaan sen varalta että ne ovat kuljettavissa. 
+
+Parilla yksikkötestillä myös tarkistetaan että käytävien luominen karttaan reitin perusteella onnistuu. 
 
 ## Miten testataan
 Ohjelmiston testit voi ajaa komennolla 
