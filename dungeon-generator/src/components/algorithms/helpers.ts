@@ -100,8 +100,6 @@ export const getUniquePoints = (triangulation: Triangle[]): Point[] => {
     return points;
 };
 
-////////////////// A* algoritmin keskeneräiset jutut
-
 
 // Lasketaan Manhattan-etäisyys kahden pisteen välillä, eli kuinka monta ruutua niiden välillä on vaakasuoraan ja pystysuoraan
 export const manhattanDistance = (a: Point, b: Point): number => {

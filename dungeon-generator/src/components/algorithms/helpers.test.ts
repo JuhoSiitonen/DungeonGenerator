@@ -3,9 +3,13 @@ import {
   circumCircleCalculator, 
   pointWithinCircle, 
   edgesEqual, 
-  superTriangleCalculator 
+  superTriangleCalculator, 
+  calculateDistance,
+  pointsEqual,
+  getUniquePoints,
+  manhattanDistance
 } from './helpers' 
-import type { Point, CircumCircle, Edge } from './types'
+import type { Point, CircumCircle, Edge, Triangle } from './types'
 
 describe('circumCircleCalculator', () => {
   it('should calculate circumcircle for a simple right triangle', () => {
@@ -121,5 +125,117 @@ describe('superTriangleCalculator', () => {
     ]
     
     expect(() => superTriangleCalculator(points)).toThrow("Tarvitaan vähintään kolme pistettä")
+  })
+})
+
+describe('calculateDistance', () => {
+  it('should calculate distance between two points', () => {
+    const p1: Point = { x: 0, y: 0 }
+    const p2: Point = { x: 3, y: 4 }
+    
+    expect(calculateDistance(p1, p2)).toBeCloseTo(5, 5)
+  })
+
+  it('should return 0 for identical points', () => {
+    const p1: Point = { x: 2, y: 3 }
+    const p2: Point = { x: 2, y: 3 }
+    
+    expect(calculateDistance(p1, p2)).toBe(0)
+  })
+
+  it('should calculate distance for negative coordinates', () => {
+    const p1: Point = { x: -1, y: -1 }
+    const p2: Point = { x: 2, y: 3 }
+    
+    expect(calculateDistance(p1, p2)).toBeCloseTo(5, 5)
+  })
+})
+
+describe('pointsEqual', () => {
+  it('should return true for identical points', () => {
+    const p1: Point = { x: 1, y: 2 }
+    const p2: Point = { x: 1, y: 2 }
+    
+    expect(pointsEqual(p1, p2)).toBe(true)
+  })
+
+  it('should return false for different points', () => {
+    const p1: Point = { x: 1, y: 2 }
+    const p2: Point = { x: 2, y: 1 }
+    
+    expect(pointsEqual(p1, p2)).toBe(false)
+  })
+
+  it('should return false for points with same x but different y', () => {
+    const p1: Point = { x: 5, y: 3 }
+    const p2: Point = { x: 5, y: 7 }
+    
+    expect(pointsEqual(p1, p2)).toBe(false)
+  })
+})
+
+describe('getUniquePoints', () => {
+  it('should return unique points from triangulation', () => {
+    const triangulation: Triangle[] = [
+      {
+        coordinates: [
+          { x: 0, y: 0 },
+          { x: 1, y: 0 },
+          { x: 0, y: 1 }
+        ],
+        circumcircle: { center: { x: 0.5, y: 0.5 }, radius: 1 }
+      },
+      {
+        coordinates: [
+          { x: 1, y: 0 }, // Duplikaatti!
+          { x: 1, y: 1 },
+          { x: 0, y: 1 } // Duplikaatti!
+        ],
+        circumcircle: { center: { x: 1, y: 0.5 }, radius: 1 }
+      }
+    ]
+    
+    const result = getUniquePoints(triangulation)
+    
+    expect(result).toHaveLength(4)
+    expect(result).toEqual(
+      expect.arrayContaining([
+        { x: 0, y: 0 },
+        { x: 1, y: 0 },
+        { x: 0, y: 1 },
+        { x: 1, y: 1 }
+      ])
+    )
+  })
+
+  it('should return empty array for empty triangulation', () => {
+    const triangulation: Triangle[] = []
+    
+    const result = getUniquePoints(triangulation)
+    
+    expect(result).toEqual([])
+  })
+})
+
+describe('manhattanDistance', () => {
+  it('should calculate Manhattan distance between two points', () => {
+    const a: Point = { x: 1, y: 1 }
+    const b: Point = { x: 4, y: 5 }
+    
+    expect(manhattanDistance(a, b)).toBe(7) // |4-1| + |5-1| = 7
+  })
+
+  it('should return 0 for identical points', () => {
+    const a: Point = { x: 3, y: 3 }
+    const b: Point = { x: 3, y: 3 }
+    
+    expect(manhattanDistance(a, b)).toBe(0)
+  })
+
+  it('should handle negative coordinates', () => {
+    const a: Point = { x: -2, y: -3 }
+    const b: Point = { x: 1, y: 2 }
+    
+    expect(manhattanDistance(a, b)).toBe(8) // |1-(-2)| + |2-(-3)| = 8
   })
 })
