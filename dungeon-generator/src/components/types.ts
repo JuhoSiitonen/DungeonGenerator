@@ -1,6 +1,6 @@
 import type { MST, Point, Triangle } from "./algorithms/types"
 
-export type Tile = 'empty' | 'room' | 'corridor'
+export type Tile = 'empty' | 'room' | 'corridor' | 'wall'
 
 export type DungeonMapMatrix = Tile[][]
 
