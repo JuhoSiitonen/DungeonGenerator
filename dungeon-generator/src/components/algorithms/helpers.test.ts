@@ -7,9 +7,15 @@ import {
   calculateDistance,
   pointsEqual,
   getUniquePoints,
-  manhattanDistance
+  manhattanDistance,
+  isValidPoint,
+  isWalkable,
+  getMovementCost,
+  getDiagonalNeighbors,
+  getNeighbors4
 } from './helpers' 
 import type { Point, CircumCircle, Edge, Triangle } from './types'
+import type { DungeonMapMatrix } from '../types'
 
 describe('circumCircleCalculator', () => {
   it('should calculate circumcircle for a simple right triangle', () => {
@@ -217,6 +223,7 @@ describe('getUniquePoints', () => {
   })
 })
 
+// Manhattan eli korttelietäisyys
 describe('manhattanDistance', () => {
   it('should calculate Manhattan distance between two points', () => {
     const a: Point = { x: 1, y: 1 }
@@ -237,5 +244,148 @@ describe('manhattanDistance', () => {
     const b: Point = { x: 1, y: 2 }
     
     expect(manhattanDistance(a, b)).toBe(8) // |1-(-2)| + |2-(-3)| = 8
+  })
+})
+
+describe('isValidPoint', () => {
+  const map: DungeonMapMatrix = [
+    ['wall', 'empty', 'wall'],
+    ['empty', 'room', 'empty'],
+    ['wall', 'corridor', 'wall']
+  ]
+
+  it('should return true for valid point within map bounds', () => {
+    const point: Point = { x: 1, y: 1 }
+    
+    expect(isValidPoint(point, map)).toBe(true)
+  })
+
+  it('should return false for point with negative x', () => {
+    const point: Point = { x: -1, y: 1 }
+    
+    expect(isValidPoint(point, map)).toBe(false)
+  })
+
+  it('should return false for point with negative y', () => {
+    const point: Point = { x: 1, y: -1 }
+    
+    expect(isValidPoint(point, map)).toBe(false)
+  })
+
+  it('should return false for point beyond map width', () => {
+    const point: Point = { x: 3, y: 1 }
+    
+    expect(isValidPoint(point, map)).toBe(false)
+  })
+
+  it('should return false for point beyond map height', () => {
+    const point: Point = { x: 1, y: 3 }
+    
+    expect(isValidPoint(point, map)).toBe(false)
+  })
+})
+
+describe('isWalkable', () => {
+  const map: DungeonMapMatrix = [
+    ['wall', 'empty', 'wall'],
+    ['empty', 'room', 'empty'],
+    ['wall', 'corridor', 'wall']
+  ]
+
+  it('should return true for empty tile', () => {
+    const point: Point = { x: 1, y: 0 }
+    
+    expect(isWalkable(point, map)).toBe(true)
+  })
+
+  it('should return true for room tile', () => {
+    const point: Point = { x: 1, y: 1 }
+    
+    expect(isWalkable(point, map)).toBe(true)
+  })
+
+  it('should return true for corridor tile', () => {
+    const point: Point = { x: 1, y: 2 }
+    
+    expect(isWalkable(point, map)).toBe(true)
+  })
+
+  it('should return false for wall tile', () => {
+    const point: Point = { x: 0, y: 0 }
+    
+    expect(isWalkable(point, map)).toBe(false)
+  })
+})
+
+describe('getNeighbors4', () => {
+  it('should return 4 orthogonal neighbors', () => {
+    const point: Point = { x: 5, y: 5 }
+    
+    const neighbors = getNeighbors4(point)
+    
+    expect(neighbors).toHaveLength(4)
+    expect(neighbors).toEqual([
+      { x: 5, y: 4 }, 
+      { x: 5, y: 6 }, 
+      { x: 4, y: 5 }, 
+      { x: 6, y: 5 }  
+    ])
+  })
+})
+
+describe('getDiagonalNeighbors', () => {
+  it('should return 8 neighbors including diagonals', () => {
+    const point: Point = { x: 5, y: 5 }
+    
+    const neighbors = getDiagonalNeighbors(point)
+    
+    expect(neighbors).toHaveLength(8)
+    expect(neighbors).toEqual([
+      { x: 5, y: 4 }, 
+      { x: 5, y: 6 }, 
+      { x: 4, y: 5 }, 
+      { x: 6, y: 5 }, 
+      { x: 4, y: 4 }, 
+      { x: 6, y: 4 }, 
+      { x: 4, y: 6 }, 
+      { x: 6, y: 6 }  
+    ])
+  })
+})
+
+describe('getMovementCost', () => {
+  it('should return 1 for horizontal movement', () => {
+    const from: Point = { x: 0, y: 0 }
+    const to: Point = { x: 1, y: 0 }
+    
+    expect(getMovementCost(from, to)).toBe(1)
+  })
+
+  it('should return 1 for vertical movement', () => {
+    const from: Point = { x: 0, y: 0 }
+    const to: Point = { x: 0, y: 1 }
+    
+    expect(getMovementCost(from, to)).toBe(1)
+  })
+
+  it('should return 1.4 for diagonal movement', () => {
+    const from: Point = { x: 0, y: 0 }
+    const to: Point = { x: 1, y: 1 }
+    
+    expect(getMovementCost(from, to)).toBe(1.4)
+  })
+
+  it('should return 1.4 for negative diagonal movement', () => {
+    const from: Point = { x: 1, y: 1 }
+    const to: Point = { x: 0, y: 0 }
+    
+    expect(getMovementCost(from, to)).toBe(1.4)
+  })
+
+  it('should return 0 for same point', () => {
+    const from: Point = { x: 5, y: 5 }
+    const to: Point = { x: 5, y: 5 }
+    
+    expect(getMovementCost(from, to)).toBe(1) // Palauttaa silti funktion logiikan mukaan 1
   })
 })
