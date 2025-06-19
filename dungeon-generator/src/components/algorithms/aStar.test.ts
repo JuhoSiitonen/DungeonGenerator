@@ -6,7 +6,6 @@ import type { Point } from './types';
 describe('A* Pathfinding Algorithm', () => {
   let simpleMap: DungeonMapMatrix;
   let complexMap: DungeonMapMatrix;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let mazeMap: DungeonMapMatrix;
 
   beforeEach(() => {

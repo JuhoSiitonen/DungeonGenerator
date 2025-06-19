@@ -90,14 +90,15 @@ export const delaunayTriangulation = (roomSpecifics: RoomSpecifics[]): Triangle[
                     polygon.push(edge)
                 }
             }
+        }
 
-            for (const badTriangle of badTriangles) {
-                const index = triangulation.indexOf(badTriangle)
-                if (index > -1) {
-                    triangulation.splice(index, 1)
-                }
+        for (const badTriangle of badTriangles) {
+            const index = triangulation.indexOf(badTriangle)
+            if (index > -1) {
+                triangulation.splice(index, 1)
             }
         }
+        
 
         // Luodaan uudet kolmiot monikulmion reunoista ja silmukan tämän hetkisestä point arvosta
         //  ja lisätään ne triangulaatioon
