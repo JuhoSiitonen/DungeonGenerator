@@ -14,7 +14,7 @@ Käyttöliittymän React komponentit on eristetty pois testauskattavuuden laskel
 
 Viimeisimpänä lisäyksenä testauksessa hyödynnetään Github actions toimintoja ja yksikkötestit ajetaan jokaisen pushauksen yhteydessä. 
 
-### Delaunay triangulaation testaus
+## Delaunay triangulaation testaus
 Triangulaation testauksessa hyödynsin tunnettua kaavaa triangulaatiossa syntyvien kolmioiden määrän laskemiselle
 
 **Kolmioiden määrä = 2n - 2 - k (jossa n on kaikkien reittipisteiden määrä ja k on konveksisen hilan reunapisteiden määrä)**
