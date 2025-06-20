@@ -20,19 +20,17 @@ Triangulaation testaamiseen tulisi vielä kehittää lisää ja monipuolisempia 
 
 Huoneiden keskipisteiden visualisointi ei ole oikeasti keskellä huoneita, tämä johtuu siitä että minulla on 80*60 kartta jota skaalataan tileSize arvolla, joka on tällä hetkellä 10. 
 
-Sivuston visuaalinen ilme on vielä aivan kesken (toki hieman toissijainen asia, mutta harmittaa minua). Sivusto ei ole internetin kautta saatavilla (myös täysin toissijainen asia, mutta mahdollisesti saan tämän nettiinkin testattavaksi).
-
-Kartan koko käyttäjän syötteenä? Kartan skaalaus (tileSize) käyttäjältä? 
-
 Yleisesti ohjelma käyttää paljon apufunktioita toiminnassaan ja se itsessään syö resursseja. Monet apufunktioista voisi toteuttaa suoraan algoritmien yhteyteen, mutta mielestäni koodin luettavuus kärsisi ja varsinkin kun en ole vielä ajautunut suorituksen suhteen pullonkaulaan en ole aikeissa muuttaa tätä lähestymistapaa. 
 
-Delaunay triangulaation nopeuttamiseksi huoneiden keskipisteet voisi 
+Delaunay triangulaation nopeuttamiseksi tulisi parantaa toisen luupin toteutusta, eli sitä kun käydään kaikki kolmiot läpi ja tutkitaan kuuluuko nyt iteraatiossa käsiteltävä piste niiden kolmioiden ympyräkehän sisälle. Tähän on olemassa tapoja, mutta ne eivät ole täysin triviaaleja. Yksi nopeutus tähän olisi ensin käsitellä pistejoukko ja järjestää ne spatiaalisesti niin lähekkäin olevat pisteet ovat myös järjestyksessä lähekkäin. Tällä tavoin algoritmin kulun aikana ei luotaisi niin paljon kolmioita joita taas tulisi verrata muiden pisteiden sijaintiin.
+
+Toinen olisi se että tulisi järjestää syntyneet kolmiot esimerkiksi quad tree tietorakenteeseen ja sen avulla tutkia kuuluuko piste kolmioiden ympyräkehän sisään, tällä tavoin O(n) aikaa vievän silmukan voisi typistää parhaimmillaan O(log n) silmukaksi. Toinen vaihtoehto tämän optimoinnin toteuttamiseksi on käyttää läheisyysmatriisia (adjacency matrix) jossa kävellään kolmiosta toiseen ja tutkitaan onko piste 
 
 ---
 
 ## Saavutetut aika- ja tilavaativuudet
 
-
+Delaunay triangulaation toteuttavan Bowyer-Watson algoritmin toteutunut aikavaativuus on O(n²). Aikavaativuuden pienentäminen vaatisi sitä että niiden kolmioiden joiden ympyräkehään uusi piste kuuluu, tulisi olla jotenkin tiedossa.
 
 ---
 

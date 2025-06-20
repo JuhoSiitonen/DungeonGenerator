@@ -1,6 +1,6 @@
 # Viikkoraportti 6 (16-22.6.2025)
 
-Käytetyt tunnit: 10h
+Käytetyt tunnit: 12h
 
 1. Mitä olen tehnyt tällä viikolla?
 Käyttöliittymän refaktorointi jossa tarpeettomat valinnat poistettiin ja kaikkien reunojen painot lisättiin näkyville. Myös pieniä muutoksia siihen mitä renderöidään missäkin järjestyksessä. Runsaasti aikaa meni erilaisien testausideoiden "testaamiseen" ja implementoimiseen. A* algoritmin testaukseen olen jokseenkin tyytyväinen ja siellä on mielestäni ihan edustaviakin testejä.
@@ -12,7 +12,7 @@ Ohjelma on edistynyt hyvin, mutta alkuperäiseen määrittelydokumenttiin verrat
 Opin että A* algoritmin heuristiikka funktiot ovat mainio tapa tuoda käyttäjälle valintoja sen suhteen miten halutaan reitittää luolastoa. Tällä hetkellä minulla on L muotoiset reitit (mahdollisimman suorat), manhattan reititys (ei suorin, mutta ei käytä diagonaalisia reittejä) ja viimeisenä diagonaaliset reitit jotka ovat lähimpänä MST reunoja reitiltään. 
 
 4. Mikä jäi epäselväksi tai tuottanut vaikeuksia?
-Ei probleemia. 
+Ei probleemia.
 
 5. Mitä teen seuraavaksi?
-Hion testejä, hion testejä, hion testejä. Ja keksin vielä jotain joka esittäisi vielä paremmin visuaalisesti sen mitä tässä ohjelmassa oikein tapahtuu, sillä siitä oli vertaisarvioinnissa hieman kommenttia. Toki olen jo tehnyt sen suhteen paljon parannuksia, mutta se voisi olla vielä hieman parempi. 
+Hion testejä, hion testejä, hion testejä. Ja aion vielä hieman kehittää minun Bowyer-Watson algoritmin toteutusta. Nyt algoritmin aikavaatimus on O(n²) mutta yritän saada sitä kohti O(n log n) aikavaatimusta. Tätä varten aion lisätä algoritmin kulussa syntyvät kolmiot adjacency matrix rakenteeseen ja hyödyntää sitä triangulaation nopeuttamiseksi.

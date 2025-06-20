@@ -51,7 +51,7 @@ Syötteet ohjaavat luolaston generoinnin eri vaiheita ja vaikuttavat luolaston k
 | Huoneiden generointi | Satunnainen + tarkistus | O(n²) (pahimmillaan) | O(n) |
 | Delaunay-triangulaatio | Bowyer–Watson | O(n log n) | O(n) |
 | Minimum Spanning Tree | (Kruskal/Prim) | O(n log n) | O(n) |
-| Käytävien rakentaminen | A* tai suora yhdistäminen | O(n) | O(n) |
+| Käytävien rakentaminen | A* tai suora yhdistäminen | O(E log E) jossa E on reunojen määrä | O(n) |
 
 ---
 
