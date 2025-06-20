@@ -22,10 +22,10 @@ export const generateDungeon = (
   } => {
 
   const { roomSpecifics, map } = manualRooms ? createMapAndRooms(manualRooms.length, seed, manualRooms) : createMapAndRooms(numberOfRooms, seed);
-  const triangles = delaunayTriangulation(roomSpecifics)
-  const mst = primsAlgorithm(triangles)
+  const triangulation = delaunayTriangulation(roomSpecifics)
+  const mst = primsAlgorithm(triangulation)
   const mstEdges: Array<{start: Point, end: Point}> = getMSTLines(mst)
   const mapWithRoomsAndCorridors = createCorridorsFromMST(map, mstEdges, allowDiagonalCorridors, directRouting);
   
-  return { roomSpecifics, map: mapWithRoomsAndCorridors, triangulation: triangles, mst };
+  return { roomSpecifics, map: mapWithRoomsAndCorridors, triangulation, mst };
 }

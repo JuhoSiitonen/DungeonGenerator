@@ -7,6 +7,8 @@ import { generateDungeon } from "./components/algorithms/generateDungeon.ts"
 
 const stageDelay = 3000 // Millisekunteina, kuinka kauan jokainen vaihe kestää
 
+const isDev = import.meta.env.MODE === 'development'
+
 function App() {
   const [map, setMap] = useState<DungeonMapMatrix>([])
   const [roomCount, setRoomCount] = useState(0)
@@ -28,6 +30,8 @@ function App() {
   const [manualRoomInputs, setManualRoomInputs] = useState<RoomSpecifics[]>([])
   const [useManualInput, setUseManualInput] = useState(false)
 
+  const seed = isDev ? "1234" : crypto.randomUUID().slice(0, 4) // Käytä kiinteää seed arvoa kehityksessä, muuten satunnainen
+
   useEffect(() => {
     if (map.length > 0 && !disableAnimation) {
       startStagedGeneration()
@@ -38,13 +42,13 @@ function App() {
     e.preventDefault()
 
     if (useManualInput) {
-      const { roomSpecifics, map, triangulation, mst } = generateDungeon(roomCount, "1234", 'astar', allowDiagonal, directRouting, manualRoomInputs)
+      const { roomSpecifics, map, triangulation, mst } = generateDungeon(roomCount, seed, 'astar', allowDiagonal, directRouting, manualRoomInputs)
       setMap(map)
       setTriangulation(triangulation)
       setMST(mst)
       setRoomSpecifics(roomSpecifics)
     } else {
-      const { roomSpecifics, map, triangulation, mst } = generateDungeon(roomCount, "1234", 'astar', allowDiagonal, directRouting)
+      const { roomSpecifics, map, triangulation, mst } = generateDungeon(roomCount, seed, 'astar', allowDiagonal, directRouting)
       setMap(map)
       setTriangulation(triangulation)
       setMST(mst)
