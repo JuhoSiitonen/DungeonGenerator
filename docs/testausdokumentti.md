@@ -19,8 +19,8 @@ Triangulaation testauksessa hyödynsin tunnettua kaavaa triangulaatiossa syntyvi
 
 **Kolmioiden määrä = 2n - 2 - k (jossa n on kaikkien reittipisteiden määrä ja k on konveksisen hilan reunapisteiden määrä)**
 
-Esimerkkinä pisteet jotka muodostavat neliön, näille triangulaatio muodostaisi (2*4 -2 -4 = 2) kaksi kolmioa.
-Jos "neliön" sisällä olisi vielä yksi piste, laskukaavan mukaan saataisi kolmioiden määräksi (2*5 -2 -4 = 4) neljä.
+Esimerkkinä pisteet jotka muodostavat neliön, näille triangulaatio muodostaisi (2 * 4 -2 -4 = 2) kaksi kolmioa.
+Jos "neliön" sisällä olisi vielä yksi piste, laskukaavan mukaan saataisi kolmioiden määräksi (2 * 5 -2 -4 = 4) neljä.
 Hahmottelin paperille parin eri triangulaation konveksisen hilan pisteet, sekä joitain hilan sisään jääviä pisteitä ja laskin testeihin laskukaavalla oikeat vastaukset. Näihin kuuluu myös selkeä kolmen pisteen muodostaman kolmion triangulaatiossa muodostuva yksi kolmio. 
 
 Triangulaation suhteen testataan myös että kaikki annetut huoneet ovat triangulaation lopputuloksessa mukana eikä lopputulokseen ole päätynyt algoritmin alussa käytettävän superkolmion pisteitä. 
