@@ -30,7 +30,7 @@ Toinen olisi se että tulisi järjestää syntyneet kolmiot esimerkiksi quad tre
 
 ## Saavutetut aika- ja tilavaativuudet
 
-Delaunay triangulaation toteuttavan Bowyer-Watson algoritmin toteutunut aikavaativuus on O(n²). Aikavaativuuden pienentäminen vaatisi sitä että niiden kolmioiden joiden ympyräkehään uusi piste kuuluu, tulisi olla jotenkin tiedossa.
+Delaunay triangulaation toteuttavan Bowyer-Watson algoritmin toteutunut aikavaativuus on O(n²). Aikavaativuuden pienentäminen vaatisi sitä että niiden kolmioiden joiden ympyräkehään uusi piste kuuluu, tulisi saada jotenkin järkevästi haarukoitua. Tähän voisi käyttää spatiaalista jaottelua quad tree rakenteella syntyneille kolmioille. Toinen tapa olisi käyttää läheisyysmatriisia (adjacency matrix) tietorakennetta jossa kolmiot ja niiden naapurikolmiot olisivat yhteydessä. Molempiin näistä ratkaisuista olisi hyvä yhdistää trianguloitavien pisteiden järjestäminen siten että lähekkäin olevat pisteet käytäisi järjestyksessä läpi algoritmin silmukassa. 
 
 ---
 
