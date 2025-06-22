@@ -1,5 +1,6 @@
 /*
 Pseudokoodi Bowyer-Watson algoritmille jolla toteutetaan Delaunay triangulaatio (lähde wikipedia)
+Tämä on naiivi toteutus, joka ei ole optimoitu suorituskyvyn kannalta.
 
 function BowyerWatson (pointList)
     // pointList is a set of coordinates defining the points to be triangulated
@@ -104,9 +105,13 @@ export const delaunayTriangulation = (roomSpecifics: RoomSpecifics[]): Triangle[
         //  ja lisätään ne triangulaatioon
         for (const edge of polygon) {
             const newTriangle: Point[] = [edge.a, edge.b, point]
+            const circumcircle = circumCircleCalculator(newTriangle[0], newTriangle[1], newTriangle[2])
+            if (!circumcircle) {
+                continue // Jos ympyräpiiriä ei voida laskea, ohitetaan
+            }
             triangulation.push({
                 coordinates: newTriangle,
-                circumcircle: circumCircleCalculator(newTriangle[0], newTriangle[1], newTriangle[2])
+                circumcircle: circumcircle
             })
         }
     }

@@ -24,6 +24,10 @@ describe('circumCircleCalculator', () => {
     const c: Point = { x: 0, y: 4 }
     
     const result = circumCircleCalculator(a, b, c)
+
+    if (!result) {
+      throw new Error("Circumcircle calculation failed")
+    }
     
 
     // Suorakulmaiselle kolmiolle jonka sivut ovat 3 ja 4 ja jonka hypotenuusa on 5
@@ -46,7 +50,8 @@ describe('circumCircleCalculator', () => {
     const b: Point = { x: 1, y: 0 }
     const c: Point = { x: 2, y: 0 }
     
-    expect(() => circumCircleCalculator(a, b, c)).toThrow("Pisteet eivät saa olla suorassa linjassa")
+    const result = circumCircleCalculator(a, b, c)
+    expect(result).toBe(undefined)
   })
 
   it('should throw error for vertical line', () => {
@@ -54,7 +59,8 @@ describe('circumCircleCalculator', () => {
     const b: Point = { x: 1, y: 1 }
     const c: Point = { x: 1, y: 2 }
     
-    expect(() => circumCircleCalculator(a, b, c)).toThrow("Pisteet eivät saa olla suorassa linjassa")
+    const result = circumCircleCalculator(a, b, c)
+    expect(result).toBe(undefined)
   })
 
   it('should throw error for diagonal line', () => {
@@ -62,7 +68,8 @@ describe('circumCircleCalculator', () => {
     const b: Point = { x: 1, y: 1 }
     const c: Point = { x: 2, y: 2 }
     
-    expect(() => circumCircleCalculator(a, b, c)).toThrow("Pisteet eivät saa olla suorassa linjassa")
+    const result = circumCircleCalculator(a, b, c)
+    expect(result).toBe(undefined)
   })
 })
 

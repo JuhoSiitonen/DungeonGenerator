@@ -2,7 +2,7 @@ import type { DungeonMapMatrix } from "../types"
 import type { Point, CircumCircle, Edge, Triangle } from "./types"
 
 
-export const circumCircleCalculator = (a: Point, b: Point, c: Point): CircumCircle  => {
+export const circumCircleCalculator = (a: Point, b: Point, c: Point): CircumCircle | undefined  => {
     // Lasketaan kolmion pisteet sisältävän ympyrän keskipiste ja säde
     // Käytetään kaavaa: https://en.wikipedia.org/wiki/Circumcircle   -> Osio Circumcenter coordinates - Cartesian coordinates
 
@@ -14,7 +14,7 @@ export const circumCircleCalculator = (a: Point, b: Point, c: Point): CircumCirc
     // Jos ristitulo on nolla, pisteet ovat suorassa linjassa, mutta floating point tarkkuus voi aiheuttaa ongelmia, joten käytetään pientä toleranssia
     const crossProduct = (a.x - b.x) * (c.y - b.y) - (a.y - b.y) * (c.x - b.x)
     if (Math.abs(crossProduct) < 1e-10) {
-      throw new Error("Pisteet eivät saa olla suorassa linjassa")
+      return undefined; // Pisteet ovat suorassa linjassa, ei ympyrää
    }
 
     const d = 2 * (a.x * ( c.y - b.y) + b.x * (a.y - c.y) + c.x * (b.y - a.y))
@@ -61,16 +61,20 @@ export const superTriangleCalculator = (points: Point[]): Triangle => {
     const midX = (minX + maxX) / 2
     const midY = (minY + maxY) / 2
 
+    const circumCircle = circumCircleCalculator(
+            { x: midX - 20 * dmax, y: midY - dmax },
+            { x: midX, y: midY + 20 * dmax },
+            { x: midX + 20 * dmax, y: midY - dmax }
+    )  
+    if (!circumCircle) {
+        throw new Error("Circumcircle could not be calculated")
+    }
     return {coordinates: [
             { x: midX - 20 * dmax, y: midY - dmax },
             { x: midX, y: midY + 20 * dmax },
             { x: midX + 20 * dmax, y: midY - dmax }
         ],
-        circumcircle: circumCircleCalculator(
-            { x: midX - 20 * dmax, y: midY - dmax },
-            { x: midX, y: midY + 20 * dmax },
-            { x: midX + 20 * dmax, y: midY - dmax }
-        )
+        circumcircle: circumCircle
 }}
 
 export const calculateDistance = (p1: Point, p2: Point): number => {
