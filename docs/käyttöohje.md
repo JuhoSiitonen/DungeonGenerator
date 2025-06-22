@@ -8,8 +8,11 @@ Seuraavaksi kloonaa repositorio koneellesi, navigoi dungeon-generator kansioon j
 
 **npm run dev**
 
+Viimeisin komento käynnistää ohjelman development version jossa huoneita satunnaisesti luova algoritmi käyttää spesifioitua seed arvoa. Voit sulkea ohjelman painamalla CTRL + C.
 
-Jonka jälkeen voit testata ohjelmaa selaimessa (todennäköisesti http://localhost:5173/ mutta saat terminaaliisi linkin varsinaiseen porttiin kun käynnistät ohjelman).
+Komennolla **npm run prod** voit käynnistää ns tuotantoversion jossa seed arvo ei ole spesifioitu ja luodut luolastot muuttuvat joka iteraatiolla. 
+
+Voit testata ohjelmaa selaimessa (todennäköisesti http://localhost:5173/ mutta saat terminaaliisi linkin varsinaiseen porttiin kun käynnistät ohjelman).
 
 Ohjelmiston testit voi ajaa komennolla 
 

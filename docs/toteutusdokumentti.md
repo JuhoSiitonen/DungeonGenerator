@@ -14,8 +14,6 @@ Koska Typescript on vahvasti tyypitetty kieli on /components ja sen alakansioiss
 
 ## Puutteet ja parannusehdotukset
 
-Tällä hetkellä jos jotkin kolme pistettä muodostavat suoran linjan ohjelma nostaa siitä virheilmoituksen. 
-
 Triangulaation testaamiseen tulisi vielä kehittää lisää ja monipuolisempia testejä. Olen jo luonut sitä varten manuaalisen testausympäristön, jonka avulla voisin kehittää uusia trianguloitavia pistejoukkoja.
 
 Huoneiden keskipisteiden visualisointi ei ole oikeasti keskellä huoneita, tämä johtuu siitä että minulla on 80*60 kartta jota skaalataan tileSize arvolla, joka on tällä hetkellä 10. 
