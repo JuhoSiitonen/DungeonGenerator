@@ -12,6 +12,22 @@ Koska Typescript on vahvasti tyypitetty kieli on /components ja sen alakansioiss
 
 ---
 
+## Miten ohjelma toimii?
+
+Käyttäjä voi valita satunnaisesti generoitavien huoneiden määrän käyttöliittymästä tai asettaa huoneet itse kartaan. Jos käyttäjä asettaa huoneet itse on mahdollista ajautua virhetilanteisiin sillä huoneiden manuaalinen syöttö oli alkuun tarkoitettu vain testausta varten. 
+
+Satunnaisessa huoneiden generoinnissa hyödynnetään SeedRandom kirjastoa ja kun ohjelmaa suoritetaan tuotantomoodissa jokainen generointi tulee eri seed arvosta. Development moodissa ohjelma käyttää yhtä staattista seed arvoa. Satunnaisessa generoinnissa ohjelma yrittää max 100 x valittu huoneiden määrä sijoittaa huoneita karttaan, joten se ei voi jäädä loputtomaan silmukkaan, mutta voi myös olla että kaikkia huoneita ei saada sijoitettua karttaan. Generoidut huoneet tallennetaan tietorakenteeseen josta käy ilmi huoneen leveys ja korkeus sekä keskipisteen koordinaatit.
+
+Seuravaaksi ohjelma toteuttaa Delaunay triangulaation Bowyer Watson algoritmilla, josta tallennetaan tietorakenteeseen luodut kolmiot (kolmen pisteen koordinaatit) ja niiden ympyräkehät (keskipiste ja säde) jotka voidaan piirtää käyttöliittymässä Canvas näkymään. 
+
+Triangulaation perusteella luodaan minimum spanning tree, jota varten triangulaatio muutetaan painotettujen reunojen listaksi ([piste, piste] ja etäisyys) ja Primin algoritmilla tehty MST luo tietorakenteen jossa on lista pisteitä ja puun kokonaispaino (kokonaispituus).
+
+MST:tä käyttäen tehdään A* algoritmilla reititys eri huoneiden välillä, tähän voi käyttäjä vaikuttaa käyttöliittymän valinnoilla, kuten "suorat reitit". 
+
+Kun ohjelma on suorittanut nämä algoritmit käyttöliittymä esittää hieman eri vaiheista muuttaen Canvasin checkbox valintoja, tämän voi ottaa pois käytöstä. 
+
+---
+
 ## Puutteet ja parannusehdotukset
 
 Triangulaation testaamiseen tulisi vielä kehittää lisää ja monipuolisempia testejä. Olen jo luonut sitä varten manuaalisen testausympäristön, jonka avulla voisin kehittää uusia trianguloitavia pistejoukkoja.
