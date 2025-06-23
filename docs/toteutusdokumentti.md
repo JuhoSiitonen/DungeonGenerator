@@ -20,7 +20,7 @@ Satunnaisessa huoneiden generoinnissa hyödynnetään SeedRandom kirjastoa ja ku
 
 Seuravaaksi ohjelma toteuttaa Delaunay triangulaation Bowyer Watson algoritmilla, josta tallennetaan tietorakenteeseen luodut kolmiot (kolmen pisteen koordinaatit) ja niiden ympyräkehät (keskipiste ja säde) jotka voidaan piirtää käyttöliittymässä Canvas näkymään. 
 
-Triangulaation perusteella luodaan minimum spanning tree, jota varten triangulaatio muutetaan painotettujen reunojen listaksi ([piste, piste] ja etäisyys) ja Primin algoritmilla tehty MST luo tietorakenteen jossa on lista pisteitä ja puun kokonaispaino (kokonaispituus).
+Triangulaation perusteella luodaan minimum spanning tree, jota varten triangulaatio muutetaan painotettujen reunojen listaksi ([piste, piste] ja etäisyys) ja Primin algoritmilla tehty MST luo tietorakenteen jossa on lista painotettuja reunoja ja puun kokonaispaino (kokonaispituus).
 
 MST:tä käyttäen tehdään A* algoritmilla reititys eri huoneiden välillä, tähän voi käyttäjä vaikuttaa käyttöliittymän valinnoilla, kuten "suorat reitit". 
 
