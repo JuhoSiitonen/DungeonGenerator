@@ -9,6 +9,14 @@ const stageDelay = 3000 // Millisekunteina, kuinka kauan jokainen vaihe kestää
 
 const isDev = import.meta.env.MODE === 'development'
 
+const stageNames = [
+  "Vaihe 1: Huoneiden sijoittelu",
+  "Vaihe 2: Delaunay-triangulaatio",
+  "Vaihe 3: Virittävä puu (MST)",
+  "Vaihe 4: Käytävien luominen",
+  "Valmis luolasto"
+]
+
 function App() {
   const [map, setMap] = useState<DungeonMapMatrix>([])
   const [roomCount, setRoomCount] = useState(0)
@@ -17,7 +25,8 @@ function App() {
   const [mst, setMST] = useState<MST>({} as MST)
   const [allowDiagonal, setAllowDiagonal] = useState<boolean>(false)
   const [directRouting, setDirectRouting] = useState<boolean>(false)
-  const [disableAnimation, setDisableAnimation] = useState<boolean>(false)
+  const [showAnimation, setShowAnimation] = useState<boolean>(false)
+  const [currentStage, setCurrentStage] = useState<number>(-1)
   const [visualOptions, setVisualOptions] = useState({
     showCircumcircles: false,
     showTriangles: false,
@@ -33,7 +42,7 @@ function App() {
   const seed = isDev ? "1234" : crypto.randomUUID().slice(0, 4) // Käytä kiinteää seed arvoa kehityksessä, muuten satunnainen
 
   useEffect(() => {
-    if (map.length > 0 && !disableAnimation) {
+    if (map.length > 0 && showAnimation) {
       startStagedGeneration()
     }
   }, [map])
@@ -78,6 +87,7 @@ function App() {
 
   const startStagedGeneration = async () => {
     // Vaihe 1 : ainoastaan huoneet ja niiden numerot
+    setCurrentStage(0)
     setVisualOptions(prev => ({
       ...prev,
       showRoomNumbers: true,
@@ -91,6 +101,7 @@ function App() {
     await delay(stageDelay)
     
     // Vaihe 2: Näytä triangulaatio ja ympyränkehät
+    setCurrentStage(1)
     setVisualOptions(prev => ({
       ...prev,
       showTriangles: true,
@@ -100,6 +111,7 @@ function App() {
     await delay(stageDelay)
     
     // Vaihe 3: Näytä virittävänpuun reunat ja painot
+    setCurrentStage(2)
     setVisualOptions(prev => ({
       ...prev,
       showMST: true,
@@ -110,6 +122,7 @@ function App() {
     await delay(stageDelay)
     
     // Vaihe 4: Näytä käytävät
+    setCurrentStage(3)
     setVisualOptions(prev => ({
       ...prev,
       showCorridors: true,
@@ -119,6 +132,7 @@ function App() {
     
     await delay(stageDelay)
     
+    setCurrentStage(4)
     setVisualOptions(prev => ({
       ...prev,
       showRoomNumbers: false,
@@ -247,13 +261,27 @@ function App() {
         <label>
           <input 
             type="checkbox" 
-            checked={disableAnimation} 
-            onChange={() => setDisableAnimation(prev => !prev)}
+            checked={showAnimation} 
+            onChange={() => setShowAnimation(prev => !prev)}
           />
-          Poista animaatio käytöstä
+          Esitä algoritmin vaiheet
         </label>
       </div>
       <VisualizationControls options={visualOptions} onChange={handleVisualOptionChange} />
+       {showAnimation && currentStage >= 0 && (
+        <div style={{ 
+          backgroundColor: '#f0f8ff', 
+          padding: '12px', 
+          margin: '16px 0', 
+          borderRadius: '8px',
+          border: '2px solid #4a90e2',
+          textAlign: 'center'
+        }}>
+          <h2 style={{ margin: 0, color: '#2c5282' }}>
+            {stageNames[currentStage]}
+          </h2>
+        </div>
+      )}
       {map.length > 0 &&
       <DungeonMap 
         dungeon={map} 
