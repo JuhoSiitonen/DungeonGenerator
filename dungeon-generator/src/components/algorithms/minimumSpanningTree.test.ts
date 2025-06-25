@@ -152,7 +152,6 @@ describe('Minimum Spanning Tree', () => {
     it('should not duplicate points that appear in multiple triangles', () => {
       const points = getUniquePoints(complexTriangulation);
       
-      // Should have unique points only
       const pointStrings = points.map(p => `${p.x},${p.y}`);
       const uniquePointStrings = [...new Set(pointStrings)];
       
@@ -246,8 +245,6 @@ describe('Minimum Spanning Tree', () => {
       const mst = primsAlgorithm(complexTriangulation);
       const points = getUniquePoints(complexTriangulation);
       
-      if (points.length <= 1) return;
-      
       // Rakennetaan vierekkäisyyslista MST:stä
       const adjacency = new Map<string, Set<string>>();
       points.forEach(p => adjacency.set(`${p.x},${p.y}`, new Set()));
@@ -286,6 +283,13 @@ describe('Minimum Spanning Tree', () => {
       if (points.length > 0) {
         expect(mst.edges).toHaveLength(points.length - 1);
       }
+    });
+
+    it('should have minimum total weight', () => {
+      const mst = primsAlgorithm([simpleTriangle]);
+      const edgesWeightSum = mst.edges.reduce((sum, edge) => sum + edge.weight, 0);
+      
+      expect(mst.totalWeight).toBeCloseTo(edgesWeightSum, 5);
     });
   });
 });

@@ -65,3 +65,7 @@ class TriangulationWalker {
         );
     }
 }
+
+// Tästä tulisi jatkaa ratkaisemalla se miten triangulaation kävelijä löytää lähimmän kolmion
+// ja miten se navigoi triangulaation läpi. Se miten löydetään lähin kolmio on vielä epäselvää. 
+// Enkä ole ihan varma onko tämä "kävelijän" runko vielä oikea suunta.

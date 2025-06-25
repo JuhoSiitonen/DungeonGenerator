@@ -39,7 +39,7 @@ MST suhteen käytetään BFS algoritmia testaamaan että kaikkiin pisteisiin pä
 
 Asyklisyys todetaan testeissä pisteiden ja kaarien perusteella. 
 
-**PUUTTEET: MST:tä ei ole vielä testattu sen suhteen että se tuottaisi oikeasti pienimmän virittävän puun. Tähän pitää vielä kehittää jokin käsin tarkistettu kokoelma pisteitä**
+MST:tä testattu sen suhteen että se tuottaisi oikeasti pienimmän virittävän puun. 
 
 ## A* testaus
 
