@@ -4,6 +4,7 @@ import { VisualizationControls } from "./components/VisualizationControls.tsx"
 import type { DungeonMapMatrix, RoomSpecifics } from "./components/types.ts"
 import type { MST, Triangle } from "./components/algorithms/types.ts"
 import { generateDungeon } from "./components/algorithms/generateDungeon.ts"
+import { ManualRoomInput } from "./components/ManualRoomInput.tsx"
 
 const stageDelay = 3000 // Millisekunteina, kuinka kauan jokainen vaihe kestää
 
@@ -148,7 +149,6 @@ function App() {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
 
-
   return (
     <div>
       <h1>2D Luolaston generointi</h1>
@@ -164,69 +164,12 @@ function App() {
             </label>
           </div>
         {useManualInput ? (
-          <div style={{ marginBottom: '16px' }}>
-            <h3>Manuaalinen huoneiden lisäys</h3>
-            {manualRoomInputs.map((room, index) => (
-              <div key={index} style={{ 
-                border: '1px solid #ccc', 
-                padding: '12px', 
-                margin: '8px 0', 
-                borderRadius: '4px', 
-              }}>
-                <h4>Huone {index + 1}</h4>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
-                  <label>
-                    Leveys:
-                    <input 
-                      type="number" 
-                      value={room.width} 
-                      onChange={(e) => updateManualRoom(index, 'width', Number(e.target.value))}
-                      min={1}
-                    />
-                  </label>
-                  <label>
-                    Korkeus:
-                    <input 
-                      type="number" 
-                      value={room.height} 
-                      onChange={(e) => updateManualRoom(index, 'height', Number(e.target.value))}
-                      min={1}
-                    />
-                  </label>
-                  <label>
-                    X keskikohta:
-                    <input 
-                      type="number" 
-                      value={room.xCenter} 
-                      onChange={(e) => updateManualRoom(index, 'xCenter', Number(e.target.value))}
-                    />
-                  </label>
-                  <label>
-                    Y keskikohta:
-                    <input 
-                      type="number" 
-                      value={room.yCenter} 
-                      onChange={(e) => updateManualRoom(index, 'yCenter', Number(e.target.value))}
-                    />
-                  </label>
-                </div>
-                <button 
-                  type="button" 
-                  onClick={() => removeManualRoom(index)}
-                  style={{ marginTop: '8px'}}
-                >
-                  Poista huone
-                </button>
-              </div>
-            ))}
-            <button 
-              type="button" 
-              onClick={addManualRoom}
-              style={{ margin: '8px 0' }}
-            >
-              Lisää huone
-            </button>
-          </div>
+          <ManualRoomInput 
+            rooms={manualRoomInputs}
+            onAddRoom={addManualRoom}
+            onRemoveRoom={removeManualRoom}
+            onUpdateRoom={updateManualRoom}
+          />
         ) : (
           <label>
             Huoneiden määrä:
@@ -275,7 +218,9 @@ function App() {
           margin: '16px 0', 
           borderRadius: '8px',
           border: '2px solid #4a90e2',
-          textAlign: 'center'
+          textAlign: 'center',
+          width: '100%',
+          maxWidth: '935px',
         }}>
           <h2 style={{ margin: 0, color: '#2c5282' }}>
             {stageNames[currentStage]}

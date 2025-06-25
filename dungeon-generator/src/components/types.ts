@@ -29,6 +29,13 @@ export type DungeonMapProps = {
   mst: MST
 }
 
+export interface ManualRoomInputProps {
+  rooms: RoomSpecifics[]
+  onAddRoom: () => void
+  onRemoveRoom: (index: number) => void
+  onUpdateRoom: (index: number, field: keyof RoomSpecifics, value: number) => void
+}
+
 export interface RoomSpecifics {
   width: number,
   height: number,
