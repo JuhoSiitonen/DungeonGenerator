@@ -68,7 +68,7 @@ Komento luo kansion coverage jonka sisältä src/index saa kattavuusraportin nä
 
 ## Testauskattavuus
 
-Testauskattavuudesta on otettu pois React komponentit, niille ehkä kehitetään vielä oma E2E testi tai sitten ne vain jäävät käyttöliittymän renderöinnistä vastaavana pois testauksesta. Se mitä muita tiedostoja on jätetty testikattavuudesta pois selviää tiedostosta vitest.config.ts
+Testauskattavuudesta on otettu pois React komponentit, niille ehkä kehitetään vielä oma E2E testi tai sitten ne vain jäävät käyttöliittymän renderöinnistä vastaavana pois testauksesta. Se mitä muita tiedostoja on jätetty testikattavuudesta pois selviää tiedostosta vitest.config.ts. Optimoitua Delaunay triangulaatiota en kerennyt toteuttamaan kunnolla joten sen testaus puuttuu.
 
-![testauskattavuus](image.png)
+![Testauskattavuus](image-1.png)
 
